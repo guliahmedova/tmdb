@@ -30,7 +30,7 @@ const OutsideWrapper = ({
   };
 
   return (
-    <div className="relative" ref={wrapperRef}>
+    <div className="relative 2xl:inline-block hidden" ref={wrapperRef}>
       {children}
     </div>
   );
