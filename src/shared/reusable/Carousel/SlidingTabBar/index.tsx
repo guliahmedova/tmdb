@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-type TabT = {
-  key: string;
-  label: string;
-};
+// type TabT = {
+//   key: string;
+//   label: string;
+// };
 
 let tabs = [
   { id: "today", label: "Today" },
