@@ -8,6 +8,9 @@ export default {
       },
       colors: {
         "dark_blue": "#032541"
+      },
+      backgroundImage: {
+        "home_hero": "url('./assets/imgs/hero_bg.webp')"
       }
     },
   },

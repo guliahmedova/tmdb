@@ -11,16 +11,42 @@ import ProfileMenu from "@/shared/components/Dropdowns/ProfileMenu";
 import SearchBar from "@/shared/components/SearchBar";
 import SidebarMobile from "@/shared/components/SidebarMobile";
 import { dropdownMenu } from "@/shared/constants/navbar-menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isSearcBarVisible, setSearchBarVisibility] = useState<boolean>(false);
   const [isSidebarVisible, setSidebarVisibility] = useState<boolean>(false);
+  const [isNavbarVisible, setNavbarVisibility] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY) {
+        setNavbarVisibility(false);
+      } else {
+        setNavbarVisibility(true);
+      }
+      setLastScrollY(window.scrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar);
+    }
+    return () => {
+      window.removeEventListener("scroll", controlNavbar);
+    };
+  }, [lastScrollY]);
 
   return (
     <>
-      <header className="bg-dark_blue w-full flex justify-center fixed top-0 left-0 right-0 h-16 5xl:h-32">
+      <header
+        className={`bg-dark_blue w-full flex justify-center z- fixed top-0 left-0 h-16 5xl:h-32 transition-all duration-500 transform ${
+          isNavbarVisible ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
         <div className="px-10 max-w-7xl h-full w-full 5xl:max-w-full 5xl:px-80">
           <div className="flex justify-between w-full h-full items-center">
             <div className="2xl:flex hidden items-center gap-5 5xl:gap-10">
