@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`bg-dark_blue w-full flex justify-center z- fixed top-0 left-0 h-16 5xl:h-32 transition-all duration-500 transform ${
+        className={`bg-dark_blue w-full flex justify-center z-50 fixed top-0 left-0 h-16 5xl:h-32 transition-all duration-500 transform ${
           isNavbarVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >

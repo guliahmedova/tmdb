@@ -1,14 +1,11 @@
 import Hero from "@/shared/components/Home/Hero";
+import Carousel from "@/shared/reusable/Carousel";
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <section className="h-screen bg-green-500">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-        voluptate aut eveniet impedit? Pariatur ducimus reprehenderit est eos
-        beatae, exercitationem dolores minima.
-      </section>
+      <Carousel />
     </>
   );
 };

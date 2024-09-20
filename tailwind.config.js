@@ -10,7 +10,8 @@ export default {
         "dark_blue": "#032541"
       },
       backgroundImage: {
-        "home_hero": "url('./assets/imgs/hero_bg.webp')"
+        "home_hero": "url('./assets/imgs/hero_bg.webp')",
+        "trending": "url('./assets/imgs/trending_bg.svg')"
       }
     },
   },
