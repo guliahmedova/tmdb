@@ -2,10 +2,16 @@ import moreIcon from "@/assets/imgs/more.svg";
 import { Link } from "react-router-dom";
 // import CircularBar from "../../CircularBar";
 import OutsideWrapper from "@/shared/components/OutsideWrapper";
-import { IMovie } from "@/shared/models/movie";
+import { ITrendMovie } from "@/shared/models/movie";
 import { useState } from "react";
 
-const CarouselCard = ({ trendMovie }: { trendMovie: IMovie }) => {
+const CarouselCard = ({
+  trendMovie,
+  bgBlur,
+}: {
+  trendMovie: ITrendMovie;
+  bgBlur?: boolean;
+}) => {
   const [isMoreOptionsVisible, setMoreOptionsVisibility] = useState(false);
 
   return (
@@ -63,7 +69,7 @@ const CarouselCard = ({ trendMovie }: { trendMovie: IMovie }) => {
           </div>
         </div>
 
-        {isMoreOptionsVisible && (
+        {isMoreOptionsVisible && bgBlur && (
           <div className="absolute inset-0 backdrop-blur-xl bg-black/50 rounded"></div>
         )}
       </div>

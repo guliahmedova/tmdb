@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-// type TabT = {
-//   key: string;
-//   label: string;
-// };
+type TabT = {
+  key: string;
+  label: string;
+};
 
-let tabs = [
-  { id: "today", label: "Today" },
-  { id: "this_week", label: "This Week" },
-];
-
-const SlidingTabBar = () => {
-  const [activeTab, setActiveTab] = useState<string>(tabs[0].id);
+const SlidingTabBar = ({ tabs }: { tabs: TabT[] }) => {
+  const [activeTab, setActiveTab] = useState<string>(tabs[0].key);
 
   const handleTabKeyChange = (tabId: string) => {
     setActiveTab(tabId);
@@ -20,13 +15,13 @@ const SlidingTabBar = () => {
 
   return (
     <div className="flex items-center border border-dark_blue rounded-full cursor-pointer font-semibold">
-      {tabs.map((tab) => (
+      {tabs?.map((tab) => (
         <button
-          key={tab.id}
+          key={tab.key}
           className="rounded-full px-5 py-1 relative outline-none"
-          onClick={() => handleTabKeyChange(tab.id)}
+          onClick={() => handleTabKeyChange(tab.key)}
         >
-          {activeTab === tab.id && (
+          {activeTab === tab.key && (
             <motion.span
               layoutId="bubble"
               className="absolute inset-0 z-10 bg-dark_blue rounded-full"
@@ -35,7 +30,7 @@ const SlidingTabBar = () => {
           )}
           <span
             className={`relative z-10 ${
-              activeTab === tab.id
+              activeTab === tab.key
                 ? "bg-gradient-to-r from-[#c0fecf] text-transparent to-[#1ed5a9] bg-clip-text"
                 : "text-dark_blue"
             }`}
