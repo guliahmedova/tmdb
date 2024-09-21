@@ -1,11 +1,9 @@
-import axios from "axios";
-
-const instance = axios.create({
+const apiConfig = {
   baseURL: "https://api.themoviedb.org/3/",
-  headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTkwMzUxMTU2ZTg0ODI2MDBjMDFiMDFjNTRhM2EyZCIsIm5iZiI6MTcyNjg2MzM0MS4wMDMzMzYsInN1YiI6IjY2ZTUzYzU2ZmIzOTE0ZTI1NWZkNTQ2YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s8Vhjr2TLp3SZmMYbiZYlGdD_khIaSyyX6vNPw7xtwE",
-  },
-});
+  apiKey: "5190351156e8482600c01b01c54a3a2d",
+  originalImage: (imgPath: string) =>
+    `https://image.tmdb.org/t/p/original/${imgPath}`,
+  w500Image: (imgPath: string) => `https://image.tmdb.org/t/p/w500/${imgPath}`,
+};
 
-export default instance;
+export default apiConfig;

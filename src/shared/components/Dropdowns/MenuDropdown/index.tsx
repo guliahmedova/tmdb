@@ -12,12 +12,12 @@ interface IDropdown {
 const Dropdown = ({ title, menu }: IDropdown) => {
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="dropdown inline-block relative group">
+      <div className="inline-block relative group">
         <button className="font-semibold inline-flex items-center text-white whitespace-nowrap">
           <span className="mr-1">{title}</span>
         </button>
 
-        <ul className="dropdown-menu absolute hidden group-hover:block text-slate-800 bg-white border shadow rounded py-2">
+        <ul className="absolute hidden z-20 group-hover:block text-slate-800 bg-white border shadow rounded py-2">
           {menu.map((m) => (
             <li key={m.id}>
               <Link

@@ -1,15 +1,16 @@
 import moreIcon from "@/assets/imgs/more.svg";
-import { Link } from "react-router-dom";
-// import CircularBar from "../../CircularBar";
 import OutsideWrapper from "@/shared/components/OutsideWrapper";
-import { ITrendMovie } from "@/shared/models/movie";
+import { IMovie } from "@/shared/models/movie";
+import moment from "moment";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import CircularBar from "../../CircularBar";
 
 const CarouselCard = ({
-  trendMovie,
+  movie,
   bgBlur,
 }: {
-  trendMovie: ITrendMovie;
+  movie: IMovie;
   bgBlur?: boolean;
 }) => {
   const [isMoreOptionsVisible, setMoreOptionsVisibility] = useState(false);
@@ -19,7 +20,7 @@ const CarouselCard = ({
       <div className="ml-5 w-[150px] h-full relative">
         <Link to="#" className="w-full h-[225px] rounded-md inline-block">
           <img
-            src={`https://image.tmdb.org/t/p/w500${trendMovie.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
             alt=""
             className="w-full h-full object-cover rounded-lg"
           />
@@ -54,17 +55,17 @@ const CarouselCard = ({
           </div>
         )}
 
-        <div className="content | relative">
-          {/* <CircularBar percentage={85} /> */}
+        <div className=" relative">
+          <CircularBar percentage={movie.vote_average * 10} />
           <div className="pt-6 px-3">
             <Link
               to="#"
               className="text-dark_blue font-bold mb-1 block hover:text-sky-400 duration-200 ease-in-out leading-4"
             >
-              {trendMovie.original_title || trendMovie.original_name}
+              {movie.original_title || movie.original_name}
             </Link>
             <span className="text-slate-600">
-              {trendMovie.first_air_date || trendMovie.release_date}
+              {moment(movie.first_air_date || movie.release_date).format("ll")}
             </span>
           </div>
         </div>

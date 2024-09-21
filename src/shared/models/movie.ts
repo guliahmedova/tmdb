@@ -1,4 +1,4 @@
-export interface ITrendMovie {
+export interface IMovie {
   adult: boolean;
   backdrop_path: string;
   first_air_date?: string;

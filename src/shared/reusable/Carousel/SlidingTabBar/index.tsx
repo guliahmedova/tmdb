@@ -1,25 +1,25 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { SetStateAction } from "react";
 
 type TabT = {
   key: string;
   label: string;
 };
 
-const SlidingTabBar = ({ tabs }: { tabs: TabT[] }) => {
-  const [activeTab, setActiveTab] = useState<string>(tabs[0].key);
+interface ISlidingTabBar {
+  tabs: TabT[];
+  setActiveTab: React.Dispatch<SetStateAction<string>>;
+  activeTab: string;
+}
 
-  const handleTabKeyChange = (tabId: string) => {
-    setActiveTab(tabId);
-  };
-
+const SlidingTabBar = ({ tabs, activeTab, setActiveTab }: ISlidingTabBar) => {
   return (
     <div className="flex items-center border border-dark_blue rounded-full cursor-pointer font-semibold">
       {tabs?.map((tab) => (
         <button
           key={tab.key}
           className="rounded-full px-5 py-1 relative outline-none"
-          onClick={() => handleTabKeyChange(tab.key)}
+          onClick={() => setActiveTab(tab.key)}
         >
           {activeTab === tab.key && (
             <motion.span

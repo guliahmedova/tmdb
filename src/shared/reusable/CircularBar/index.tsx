@@ -1,43 +1,76 @@
 const CircularProgress = ({ percentage }: { percentage: number }) => {
-  const radius = 40;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const dashArray = Math.PI * 100;
+  const dashOffset = Math.PI * (100 - percentage);
+
+  const bar = {
+    low: "#db2360",
+    medium: "#d2d531",
+    high: "#21d07a",
+    none: "#d4d4d4",
+  };
+  const track = {
+    low: "#571435",
+    medium: "#423d0f",
+    high: "#204529",
+    none: "#666666",
+  };
+
+  const getColor = (
+    ratingPercentage: number
+  ): "low" | "medium" | "high" | "none" => {
+    if (ratingPercentage >= 70) {
+      return "high";
+    }
+    if (ratingPercentage >= 40) {
+      return "medium";
+    }
+    if (ratingPercentage > 0) {
+      return "low";
+    }
+
+    return "none";
+  };
 
   return (
-    <div className="absolute -top-2 left-4">
-      <div className="relative size-[38px]">
-        <svg
-          className="w-full h-full transform -rotate-90"
-          viewBox="0 0 100 100"
-        >
-          <circle
-            className="text-gray-300"
-            strokeWidth="8"
-            stroke="currentColor"
-            fill="transparent"
-            r={radius}
-            cx="50"
-            cy="50"
-          />
-          <circle
-            className="text-green-500"
-            strokeWidth="8"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            strokeLinecap="round"
-            stroke="currentColor"
-            fill="transparent"
-            r={radius}
-            cx="50"
-            cy="50"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text- font-semibold text-white">
-            {percentage}
-            <sup className="text-sm">%</sup>
-          </span>
-        </div>
+    <div className="absolute -top-8 left-4 size-[38px] bg-dark_blue rounded-full flex justify-center items-center">
+      <svg
+        width="34px"
+        height="34px"
+        viewBox="0 0 100 100"
+        className="-rotate-90"
+      >
+        <circle
+          cx="52.5"
+          cy="52.5"
+          r="50"
+          fill="transparent"
+          stroke={track[getColor(percentage)]}
+          strokeWidth={6}
+          strokeDasharray={dashArray}
+          className="scale-[0.95]"
+        />
+        <circle
+          cx="52.5"
+          cy="52.5"
+          r="50"
+          fill="transparent"
+          stroke={bar[getColor(percentage)]}
+          strokeDashoffset={dashOffset}
+          strokeWidth={6}
+          strokeDasharray={dashArray}
+          strokeLinecap="round"
+          className="scale-[0.95]"
+        />
+      </svg>
+      <div className="font-semibold absolute text-white">
+        {percentage ? (
+          <>
+            {percentage.toFixed(0)}
+            <span className="absolute text-[4px] top-1">%</span>
+          </>
+        ) : (
+          "NR"
+        )}
       </div>
     </div>
   );
