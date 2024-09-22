@@ -31,52 +31,56 @@ const MovieDetail = () => {
         <div className="w-full">
           <div>
             <div className="flex justify-center pt-4 border">
-              <ul className="flex gap-10">
-                <li className="flex items-center gap-1 pb-4 text-slate-600 border-b-4 border-sky-500">
+              <ul className="flex lg:gap-10 gap-5">
+                <li className="flex xl:text-base text-sm items-baseline gap-1 xl:pb-4 pb-3 text-slate-600 border-b-4 border-sky-500">
                   Overview <img src={downArrow} className="size-2" alt="" />
                 </li>
-                <li className="flex items-center gap-1 pb-4 text-slate-600 border-b-4 border-transparent">
+                <li className="flex xl:text-base text-sm items-baseline gap-1 xl:pb-4 pb-3 text-slate-600 border-b-4 border-transparent">
                   Media <img src={downArrow} className="size-2" alt="" />
                 </li>
-                <li className="flex items-center gap-1 pb-4 text-slate-600 border-b-4 border-transparent">
+                <li className="flex xl:text-base text-sm items-baseline gap-1 xl:pb-4 pb-3 text-slate-600 border-b-4 border-transparent">
                   Fandom <img src={downArrow} className="size-2" alt="" />
                 </li>
-                <li className="flex items-center gap-1 pb-4 text-slate-600 border-b-4 border-transparent">
+                <li className="flex xl:text-base text-sm items-baseline gap-1 xl:pb-4 pb-3 text-slate-600 border-b-4 border-transparent">
                   Share <img src={downArrow} className="size-2" alt="" />
                 </li>
               </ul>
             </div>
 
             <div className="py-10 flex justify-center bg-black">
-              <div className="max-w-7xl w-full flex gap-6">
+              <div className="max-w-7xl w-full flex gap-6 xl:px-0 px-4">
                 <div
-                  className="relative w-3/12 cursor-pointer group rounded-lg"
+                  className="relative xl:w-3/12 w-full h-56 cursor-pointer group rounded-lg"
                   onClick={() => setImageExpend(true)}
                 >
                   <img
                     src={m}
                     alt=""
-                    className="size-full object-cover border shadow rounded-lg"
+                    className="size-full object-cover shadow rounded-lg"
                   />
-                  <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex border shadow">
-                    <div className="flex gap-3 items-center">
-                      <img src={expand} alt="expand" className="size-10" />
+                  <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex shadow">
+                    <div className="flex xl:gap-3 items-center xl:flex-row flex-col">
+                      <img
+                        src={expand}
+                        alt="expand"
+                        className="xl:size-10 size-6"
+                      />
                       <span className="text-white font-bold">Expand</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <h2 className="text-4xl font-bold text-white">
+                  <h2 className="xl:text-4xl text-lg font-bold text-white">
                     The Flash
                     <span className="font-normal text-slate-50"> (2014)</span>
                   </h2>
 
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="border border-gray-500 rounded-lg p-1 text-gray-500">
+                    <span className="border border-gray-500 rounded-lg p-1 text-gray-500 xl:text-base text-xs">
                       TV-14
                     </span>
-                    <ul className="text-gray-50 flex items-center gap-1">
+                    <ul className="text-gray-50 flex items-center gap-1 xl:text-base text-xs">
                       <li className="hover:text-gray-500">
                         <Link to="#">Drama,</Link>
                       </li>
@@ -174,7 +178,7 @@ const MovieDetail = () => {
             </div>
           </div>
 
-          <div className="mt-4 flex justify-center">
+          <div className="mt-4 justify-center hidden">
             <div className="max-w-7xl w-full">
               <div className="flex gap-4">
                 <div className="w-[80%]">
