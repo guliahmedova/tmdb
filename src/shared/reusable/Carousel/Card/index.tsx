@@ -17,11 +17,11 @@ const CarouselCard = ({
 
   return (
     <OutsideWrapper setDropdownVisibility={setMoreOptionsVisibility}>
-      <Link
-        to={`/movie/${movie.id}`}
-        className="ml-5 w-[150px] h-full relative"
-      >
-        <Link to="#" className="w-full h-[225px] rounded-md inline-block">
+      <div className="ml-5 w-[150px] h-full relative">
+        <Link
+          to={`/movie/${movie.id}`}
+          className="w-full h-[225px] rounded-md inline-block"
+        >
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
             alt=""
@@ -62,7 +62,7 @@ const CarouselCard = ({
           <CircularBar percentage={movie.vote_average * 10} />
           <div className="pt-6 px-3">
             <Link
-              to="#"
+              to={`/movie/${movie.id}`}
               className="text-dark_blue font-bold mb-1 block hover:text-sky-400 duration-200 ease-in-out leading-4"
             >
               {movie.original_title || movie.original_name}
@@ -76,7 +76,7 @@ const CarouselCard = ({
         {isMoreOptionsVisible && bgBlur && (
           <div className="absolute inset-0 backdrop-blur-xl bg-black/50 rounded"></div>
         )}
-      </Link>
+      </div>
     </OutsideWrapper>
   );
 };
