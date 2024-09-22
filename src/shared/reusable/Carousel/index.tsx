@@ -7,6 +7,7 @@ interface ICarousel {
   children: ReactNode;
   tabChildren?: ReactNode;
   loading?: "idle" | "pending" | "succeeded" | "failed";
+  sectionMarginTop?: number;
 }
 
 const Carousel = ({
@@ -15,9 +16,10 @@ const Carousel = ({
   children,
   tabChildren,
   loading,
+  sectionMarginTop = 8,
 }: ICarousel) => {
   return (
-    <section className="flex justify-center min-h-96 my-8">
+    <section className={`flex justify-center min-h-96 my-${sectionMarginTop}`}>
       <div
         className={`max-w-7xl w-full bg-white ${
           bgImage

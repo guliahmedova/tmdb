@@ -28,6 +28,7 @@ const Home = () => {
       <Carousel
         title="Trending"
         bgImage="trending"
+        loading="succeeded"
         tabChildren={
           <SlidingTabBar
             tabs={trendingTabs}

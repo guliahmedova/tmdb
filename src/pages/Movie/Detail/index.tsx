@@ -5,13 +5,21 @@ import info from "@/assets/imgs/info.svg";
 import saveIcon from "@/assets/imgs/save.svg";
 import heartIcon from "@/assets/imgs/heart.svg";
 import playIcon from "@/assets/imgs/play.svg";
+import arrowNext from "@/assets/imgs/arrow-next.svg";
 import addIcon from "@/assets/imgs/add-list.svg";
 import { Link } from "react-router-dom";
 import CircularProgress from "@/shared/reusable/CircularBar";
 import Carousel from "@/shared/reusable/Carousel";
 import CastCard from "@/shared/components/MovieDetail/CastCard";
+import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
+import { useState } from "react";
+import Media from "@/shared/components/MovieDetail/Media";
 
 const MovieDetail = () => {
+  const [activeSocialTab, setActiveSocialTab] = useState<
+    "review" | "discussion"
+  >("review");
+
   return (
     <div className="flex justify-center">
       <div className="w-full">
@@ -157,12 +165,118 @@ const MovieDetail = () => {
         </div>
 
         <div className="mt-4 flex justify-center">
-          <div className="max-w-7xl w-full bg-red-400">
-            <div className="flex items-center gap-8">
-              <div className="w-10/12 bg-purple-300">
-                <Carousel title="Series Cast">
+          <div className="max-w-7xl w-full">
+            <div className="flex gap-4">
+              <div className="w-[80%]">
+                <Carousel title="Series Cast" loading="succeeded">
                   <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <CastCard />
+                  <div className="min-w-36 w-36 text-xs ml-4 h-[270px] flex gap-2 items-center justify-center">
+                    <Link to="#" className="hover:text-gray-500">
+                      View More
+                    </Link>
+                    <img src={arrowNext} className="size-6" alt="view more" />
+                  </div>
                 </Carousel>
+
+                <div className="border-b pb-4">
+                  <div className="flex items-center gap-5 pl-10">
+                    <h3 className="font-semibold text-2xl text-dark_blue pb-3">
+                      Social
+                    </h3>
+                    <div className="flex items-center gap-4 font-semibold">
+                      <span
+                        className={`pb-2 ${
+                          activeSocialTab === "review"
+                            ? "border-b-2 border-black"
+                            : "border-b-2 border-transparent "
+                        } cursor-pointer`}
+                        onClick={() => setActiveSocialTab("review")}
+                      >
+                        Reviews 0
+                      </span>
+                      <span
+                        className={`pb-2 ${
+                          activeSocialTab === "discussion"
+                            ? "border-b-2 border-black"
+                            : "border-b-2 border-transparent "
+                        } cursor-pointer`}
+                        onClick={() => setActiveSocialTab("discussion")}
+                      >
+                        Discussions 2
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-col gap-4">
+                    {activeSocialTab === "review" ? (
+                      // <p className="text-slate-500 pl-10">
+                      //   We don't have any reviews for Agatha All Along. Would
+                      //   you like to write one?
+                      // </p>
+                      <ReviewsCard />
+                    ) : (
+                      <p className="text-slate-500 pl-10">
+                        We don't have any discussions for Agatha All Along.
+                        Would you like to write one?
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <Media />
+              </div>
+
+              <div className="w-full">
+                <div className="flex items-center gap-5">
+                  <button className="bg-sky-500 shadow-lg text-white font-semibold rounded-lg px-4 py-2 flex items-center gap-3 w-28">
+                    <img
+                      src={playIcon}
+                      alt="play now"
+                      className="size-4 animate-pulse"
+                    />
+                    Play Now
+                  </button>
+                  <Link to="" className="w-24 leading-tight">
+                    Presumed Innocent on Apple TV+
+                  </Link>
+                </div>
+
+                <div className="mt-4">
+                  <h2 className="font-semibold">Facts</h2>
+                  <ul>
+                    <li>
+                      <h2 className="font-semibold mt-2">Status</h2>
+                      <p className="text-gray-400 font-medium">
+                        Returning Series
+                      </p>
+                    </li>
+                    <li>
+                      <h2 className="font-semibold mt-2">Type</h2>
+                      <p className="text-gray-400 font-medium">Miniseries</p>
+                    </li>
+                    <li>
+                      <h2 className="font-semibold mt-2">Original Language</h2>
+                      <p className="text-gray-400 font-medium">English</p>
+                    </li>
+                    <li>
+                      <h2 className="font-semibold mt-2">Keywords</h2>
+                      <ul>
+                        <li className="border bg-gray-100 p-1 rounded-lg shadow w-fit text-gray-600 text-xs">
+                          witch
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
