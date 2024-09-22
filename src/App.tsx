@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SearchResult from "./pages/SearchResult";
 import Login from "./pages/Login";
 import MovieDetail from "./pages/Movie/Detail";
+import Filter from "./pages/Filter";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route index path="/movie/:id" element={<MovieDetail />} />
+          <Route index path="/filter" element={<Filter />} />
           <Route index path="/search" element={<SearchResult />} />
           <Route index path="/login" element={<Login />} />
         </Routes>

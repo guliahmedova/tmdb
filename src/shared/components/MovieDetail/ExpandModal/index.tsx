@@ -1,8 +1,8 @@
-import { SetStateAction } from "react";
-import m from "@/assets/imgs/m1.jpg";
-import like from "@/assets/imgs/like.svg";
 import arrow from "@/assets/imgs/arrow-next.svg";
 import closeIcon from "@/assets/imgs/close.svg";
+import like from "@/assets/imgs/like.svg";
+import m from "@/assets/imgs/m1.jpg";
+import { SetStateAction } from "react";
 
 interface IExpandModal {
   setState: React.Dispatch<SetStateAction<boolean>>;
@@ -10,17 +10,17 @@ interface IExpandModal {
 
 const ExpandModal = ({ setState }: IExpandModal) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg w-6/12 h-[80vh]">
-      <div className="flex">
-        <div className="w-6/12">
+    <div className="bg-white shadow-lg rounded-lg w-9/12 h-[80vh]">
+      <div className="grid grid-cols-2 h-full">
+        <div className="size-full bg-red-800 relative">
           <img
             src={m}
             alt=""
-            className="size-full object-cover rounded-tl-lg rounded-bl-lg"
+            className="rounded-tl-lg rounded-bl-lg absolute size-full object-cover"
           />
         </div>
 
-        <div className="w-6/12 p-4">
+        <div className="w-full p-4">
           <div className="text-right">
             <button
               className="cursor-pointer mr-0"

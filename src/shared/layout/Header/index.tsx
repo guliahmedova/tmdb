@@ -79,7 +79,7 @@ const Header = () => {
               <img src={logoMobile} alt="logo" className="size-14 bg-red-500" />
             </Link>
 
-            <div className="flex items-center 2xl:gap-8 gap-4 5xl:gap-24">
+            <div className="flex items-center 2xl:gap-8 gap-0 5xl:gap-24">
               <NewDropdown />
               <LanguageDropdown />
               <div className="relative cursor-pointer 2xl:inline-block hidden">

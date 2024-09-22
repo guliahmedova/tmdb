@@ -47,10 +47,10 @@ const MovieDetail = () => {
               </ul>
             </div>
 
-            <div className="py-10 flex justify-center bg-black">
-              <div className="max-w-7xl w-full flex md:flex-row flex-col gap-6 px-10">
+            <div className="py-10 flex justify-center bg-black lg:px-0 px-10">
+              <div className="max-w-7xl w-full flex gap-6 md:flex-row flex-col md:px-0 px-10">
                 <div
-                  className="relative xl:w-3/12 md:h-auto md:w-3/12 size-4/12 cursor-pointer group rounded-lg mx-auto"
+                  className="relative md:w-6/12 lg:w-3/12 cursor-pointer group rounded-lg bg-red-400 md:mx-0 mx-auto"
                   onClick={() => setImageExpend(true)}
                 >
                   <img
@@ -102,16 +102,16 @@ const MovieDetail = () => {
                       percentageTop={0}
                       fontSize="lg"
                     />
-                    <span className="font-bold text-white md:w-12 text-nowrap md:text-base text-xs md:ml-20 hidden md:inline-block">
+                    <span className="font-bold text-white md:w-12 text-nowrap md:text-base text-xs lg:ml-20 lg:mr-10 hidden lg:inline-block">
                       User Score
                     </span>
-                    <span className="size-9 cursor-pointer md:inline-block text-2xl scale-110 hover:scale-125 text-center relative group hidden">
+                    <span className="size-9 cursor-pointer lg:inline-block text-2xl scale-110 hover:scale-125 text-center relative group hidden">
                       😍
                       <span className="absolute bg-slate-700 border border-gray-50 px-2 rounded-lg top-6 left-8 text-white text-[10px] text-nowrap hidden group-hover:inline-block">
                         Smilling face with heart eyes
                       </span>
                     </span>
-                    <button className="flex items-center md:gap-2 gap-1 text-xs md:text-base shadow hover:scale-x-105 md:bg-dark_blue p-2 text-white font-semibold rounded-2xl ">
+                    <button className="flex items-center md:gap-2 gap-1 text-xs md:text-base shadow hover:scale-x-105 md:bg-dark_blue p-2 text-white font-semibold rounded-2xl lg:ml-0 md:ml-20">
                       What's your
                       <span className="border-b-2 border-sky-500">Vibe?</span>
                       <div className="relative group md:inline-block hidden">

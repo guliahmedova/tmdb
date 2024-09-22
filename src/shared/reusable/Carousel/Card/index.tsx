@@ -17,7 +17,7 @@ const CarouselCard = ({
 
   return (
     <OutsideWrapper setDropdownVisibility={setMoreOptionsVisibility}>
-      <div className="ml-5 w-[150px] h-full relative">
+      <div className="ml-5 w-[150px] h-full relative shadow">
         <Link
           to={`/movie/${movie.id}`}
           className="w-full h-[225px] rounded-md inline-block"
