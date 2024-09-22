@@ -12,9 +12,9 @@ const App = () => {
       <main className="mt-16">
         <Routes>
           <Route index path="/" element={<Home />} />
-          <Route index path="/login" element={<Login />} />
           <Route index path="/movie/:id" element={<MovieDetail />} />
           <Route index path="/search" element={<SearchResult />} />
+          <Route index path="/login" element={<Login />} />
         </Routes>
       </main>
     </>

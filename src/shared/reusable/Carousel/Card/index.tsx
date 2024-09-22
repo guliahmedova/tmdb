@@ -17,7 +17,10 @@ const CarouselCard = ({
 
   return (
     <OutsideWrapper setDropdownVisibility={setMoreOptionsVisibility}>
-      <div className="ml-5 w-[150px] h-full relative">
+      <Link
+        to={`/movie/${movie.id}`}
+        className="ml-5 w-[150px] h-full relative"
+      >
         <Link to="#" className="w-full h-[225px] rounded-md inline-block">
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
@@ -73,7 +76,7 @@ const CarouselCard = ({
         {isMoreOptionsVisible && bgBlur && (
           <div className="absolute inset-0 backdrop-blur-xl bg-black/50 rounded"></div>
         )}
-      </div>
+      </Link>
     </OutsideWrapper>
   );
 };
