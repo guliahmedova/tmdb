@@ -14,7 +14,7 @@ const LanguageDropdown = () => {
 
   return (
     <OutsideWrapper setDropdownVisibility={setLangDropdownVisibility}>
-      <div className="relative 2xl:inline-block hidden">
+      <div className="2xl:relative 2xl:inline-block hidden">
         <button
           className="border-2 border-white uppercase cursor-pointer duration-300 ease-in-out text-md rounded text-white bg-transparent p-1 px-2 hover:bg-white hover:text-slate-800"
           onClick={() => setLangDropdownVisibility(true)}

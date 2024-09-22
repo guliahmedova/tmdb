@@ -47,7 +47,7 @@ const Header = () => {
           isNavbarVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="px-10 max-w-7xl h-full w-full 5xl:max-w-full 5xl:px-80">
+        <div className="px-5 max-w-7xl h-full w-full 5xl:max-w-full 5xl:px-80">
           <div className="flex justify-between w-full h-full items-center">
             <div className="2xl:flex hidden items-center gap-5 5xl:gap-10">
               <Link to="/">
@@ -75,8 +75,8 @@ const Header = () => {
               <img src={menuIcon} alt="menu" />
             </button>
 
-            <Link to="/" className="2xl:hidden inline-block">
-              <img src={logoMobile} alt="logo" className="size-14" />
+            <Link to="/" className="2xl:hidden inline-block mx-auto">
+              <img src={logoMobile} alt="logo" className="size-14 bg-red-500" />
             </Link>
 
             <div className="flex items-center 2xl:gap-8 gap-4 5xl:gap-24">

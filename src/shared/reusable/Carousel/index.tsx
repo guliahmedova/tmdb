@@ -1,6 +1,4 @@
-import { RootState } from "@/redux/app/store";
 import { ReactNode } from "react";
-import { useSelector } from "react-redux";
 import Skeleton from "./Skeleton";
 
 interface ICarousel {
@@ -8,13 +6,16 @@ interface ICarousel {
   bgImage?: string;
   children: ReactNode;
   tabChildren?: ReactNode;
+  loading?: "idle" | "pending" | "succeeded" | "failed";
 }
 
-const Carousel = ({ title, bgImage, children, tabChildren }: ICarousel) => {
-  const trendingMovieLoading = useSelector(
-    (state: RootState) => state.movie.loading
-  );
-
+const Carousel = ({
+  title,
+  bgImage,
+  children,
+  tabChildren,
+  loading,
+}: ICarousel) => {
   return (
     <section className="flex justify-center min-h-96 my-8">
       <div
@@ -32,7 +33,7 @@ const Carousel = ({ title, bgImage, children, tabChildren }: ICarousel) => {
           <div className="my-5 relative">
             <div className="w-full after:content-[''] after:w-16 after:h-full after:absolute after:top-0 after:right-0 after:bg-gradient-to-r from-white/0 to-white after:pointer-events-none">
               <div className="w-full flex overflow-x-auto">
-                {trendingMovieLoading === "succeeded" ? children : <Skeleton />}
+                {loading === "succeeded" ? children : <Skeleton />}
               </div>
             </div>
           </div>

@@ -29,7 +29,11 @@ const OutsideWrapper = ({
     }
   };
 
-  return <div ref={wrapperRef}>{children}</div>;
+  return (
+    <div className="hidden 2xl:inline-block" ref={wrapperRef}>
+      {children}
+    </div>
+  );
 };
 
 export default OutsideWrapper;

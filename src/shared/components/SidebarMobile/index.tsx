@@ -17,9 +17,9 @@ const SidebarMobile = ({ isSidebarVisible }: { isSidebarVisible: boolean }) => {
     <div
       className={`fixed duration-1000 transition-all ease-in-out ${
         isSidebarVisible ? "translate-x-0" : "-translate-x-full"
-      } z-20 w-96 max-h-full h-full bg-dark_blue text-white font-semibold flex items-center opacity-95 backdrop-blur-3xl`}
+      } z-20 w-96 max-h-full h-screen bg-dark_blue text-white font-semibold flex items-center opacity-95 backdrop-blur-3xl`}
     >
-      <div className="min-h-full w-full flex flex-col items-center justify-center">
+      <div className="min-h-full w-full flex flex-col pt-8">
         {dropdownMenu.map((menu) => (
           <div className="w-full h-full px-10" key={menu.id}>
             <div className="dropdown inline-block relative">
