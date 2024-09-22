@@ -5,6 +5,7 @@ import expand from "@/assets/imgs/expand.svg";
 import heartIcon from "@/assets/imgs/heart.svg";
 import info from "@/assets/imgs/info.svg";
 import m from "@/assets/imgs/m1.jpg";
+import closeIcon from "@/assets/imgs/close.svg";
 import playIcon from "@/assets/imgs/play.svg";
 import saveIcon from "@/assets/imgs/save.svg";
 import CastCard from "@/shared/components/MovieDetail/CastCard";
@@ -22,6 +23,7 @@ const MovieDetail = () => {
     "review" | "discussion"
   >("review");
   const [isImageExpand, setImageExpend] = useState(false);
+  const [isTrailerPopupVisible, setTrailerPopupVisibility] = useState(false);
 
   return (
     <>
@@ -135,7 +137,10 @@ const MovieDetail = () => {
                         alt="add to your watchlist"
                       />
                     </div>
-                    <div className="flex items-center gap-2 hover:text-slate-200 text-white font-bold cursor-pointer">
+                    <div
+                      className="flex items-center gap-2 hover:text-slate-200 text-white font-bold cursor-pointer"
+                      onClick={() => setTrailerPopupVisibility(true)}
+                    >
                       <img className="size-4" src={playIcon} alt="" />
                       <span>Play Trailer</span>
                     </div>
@@ -294,6 +299,34 @@ const MovieDetail = () => {
       <PopupWrapper
         isOpen={isImageExpand}
         children={<ExpandModal setState={setImageExpend} />}
+      />
+
+      <PopupWrapper
+        isOpen={isTrailerPopupVisible}
+        children={
+          <div className="bg-black shadow-lg w-8/12 h-[90vh] rounded-lg flex flex-col justify-between">
+            <div className="text-right w-full z-10 flex justify-between px-4 py-4">
+              <h6 className="text-lg text-white font-semibold">Play Trailer</h6>
+              <button onClick={() => setTrailerPopupVisibility(false)}>
+                <img
+                  src={closeIcon}
+                  className="size-8 invert"
+                  alt="close trailer popup"
+                />
+              </button>
+            </div>
+            <div className="size-full rounded-lg flex justify-end">
+              <iframe
+                className="mb-0 size-full"
+                src="https://stream.mux.com/6fiGM5ChLz8T66ZZiuzk1KZuIKX8zJz00/medium.mp4?autoplay=1&mute=1"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        }
       />
     </>
   );
