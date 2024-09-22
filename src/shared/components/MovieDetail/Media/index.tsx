@@ -10,7 +10,7 @@ const Media = () => {
   >("popular");
 
   return (
-    <div className="border-b mt-10">
+    <div className="md:border-b mt-10">
       <div className="flex items-center gap-5 pl-10">
         <h3 className="font-semibold text-2xl text-dark_blue pb-3">Media</h3>
         <div className="flex items-center gap-4 font-semibold">

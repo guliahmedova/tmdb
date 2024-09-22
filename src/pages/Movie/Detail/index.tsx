@@ -48,9 +48,9 @@ const MovieDetail = () => {
             </div>
 
             <div className="py-10 flex justify-center bg-black">
-              <div className="max-w-7xl w-full flex gap-6 xl:px-0 px-4">
+              <div className="max-w-7xl w-full flex md:flex-row flex-col gap-6 px-10">
                 <div
-                  className="relative xl:w-3/12 w-full h-56 cursor-pointer group rounded-lg"
+                  className="relative xl:w-3/12 md:h-auto md:w-3/12 size-4/12 cursor-pointer group rounded-lg mx-auto"
                   onClick={() => setImageExpend(true)}
                 >
                   <img
@@ -70,13 +70,13 @@ const MovieDetail = () => {
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <h2 className="xl:text-4xl text-lg font-bold text-white">
+                <div className="md:mt-4">
+                  <h2 className="md:text-4xl text-lg font-bold text-white md:text-left text-center">
                     The Flash
                     <span className="font-normal text-slate-50"> (2014)</span>
                   </h2>
 
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2 flex items-center gap-2 justify-center md:justify-start">
                     <span className="border border-gray-500 rounded-lg p-1 text-gray-500 xl:text-base text-xs">
                       TV-14
                     </span>
@@ -90,7 +90,7 @@ const MovieDetail = () => {
                     </ul>
                   </div>
 
-                  <div className="my-8 flex items-center gap-4 relative">
+                  <div className="md:my-8 my-3 flex items-center gap-4 relative md:justify-start justify-center">
                     <CircularProgress
                       percentage={78}
                       top={0}
@@ -102,18 +102,19 @@ const MovieDetail = () => {
                       percentageTop={0}
                       fontSize="lg"
                     />
-                    <span className="font-bold text-white w-12 ml-20">
+                    <span className="font-bold text-white md:w-12 text-nowrap md:text-base text-xs md:ml-20 hidden md:inline-block">
                       User Score
                     </span>
-                    <span className="size-9 cursor-pointer inline-block text-2xl scale-110 hover:scale-125 text-center relative group">
+                    <span className="size-9 cursor-pointer md:inline-block text-2xl scale-110 hover:scale-125 text-center relative group hidden">
                       😍
                       <span className="absolute bg-slate-700 border border-gray-50 px-2 rounded-lg top-6 left-8 text-white text-[10px] text-nowrap hidden group-hover:inline-block">
                         Smilling face with heart eyes
                       </span>
                     </span>
-                    <button className="flex items-center gap-2 shadow hover:scale-x-105 bg-dark_blue p-2 text-white font-semibold rounded-2xl ">
-                      What's your <span>Vibe?</span>
-                      <div className="relative group">
+                    <button className="flex items-center md:gap-2 gap-1 text-xs md:text-base shadow hover:scale-x-105 md:bg-dark_blue p-2 text-white font-semibold rounded-2xl ">
+                      What's your
+                      <span className="border-b-2 border-sky-500">Vibe?</span>
+                      <div className="relative group md:inline-block hidden">
                         <img src={info} alt="info" className="size-4" />
                         <span className="absolute -top-8 left-8 bg-dark_blue text-white rounded-lg shadow p-2 w-72 text-left scale-105 hidden  group-hover:inline-block">
                           Welcome to Vibes, TMDB's new rating system! For more
@@ -123,7 +124,7 @@ const MovieDetail = () => {
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-5">
+                  <div className="md:flex hidden items-center gap-5">
                     <div className="size-12 bg-dark_blue rounded-full flex flex-col items-center justify-center cursor-pointer">
                       <img className="size-4" src={addIcon} alt="add to list" />
                     </div>
@@ -155,8 +156,10 @@ const MovieDetail = () => {
                       Revenge is a witch.
                     </span>
                     <div>
-                      <h5 className="font-bold text-lg text-white">Overview</h5>
-                      <p className="font-medium text-slate-100">
+                      <h5 className="font-bold md:text-lg text-white">
+                        Overview
+                      </h5>
+                      <p className="font-medium text-xs md:text-base text-slate-100">
                         Agatha Harkness gathers a coven of witches and sets off
                         down, down, down The Witches' Road.
                       </p>
@@ -178,10 +181,10 @@ const MovieDetail = () => {
             </div>
           </div>
 
-          <div className="mt-4 justify-center hidden">
+          <div className="mt-4 flex justify-center">
             <div className="max-w-7xl w-full">
-              <div className="flex gap-4">
-                <div className="w-[80%]">
+              <div className="flex md:flex-row flex-col gap-4">
+                <div className="md:w-[80%] w-full">
                   <Carousel title="Series Cast" loading="succeeded">
                     <CastCard />
                     <CastCard />
@@ -230,7 +233,7 @@ const MovieDetail = () => {
                       </div>
                     </div>
 
-                    <div className="mt-4 flex flex-col gap-4">
+                    <div className="mt-4 flex flex-col gap-4 md:px-0 px-8">
                       {activeSocialTab === "review" ? (
                         // <p className="text-slate-500 pl-10">
                         //   We don't have any reviews for Agatha All Along. Would
@@ -249,8 +252,8 @@ const MovieDetail = () => {
                   <Media />
                 </div>
 
-                <div className="w-full">
-                  <div className="flex items-center gap-5">
+                <div className="w-full md:px-0 px-8 md:pb-0 pb-4">
+                  <div className="md:flex hidden items-center gap-5">
                     <button className="bg-sky-500 shadow-lg text-white font-semibold rounded-lg px-4 py-2 flex items-center gap-3 w-28">
                       <img
                         src={playIcon}
@@ -264,7 +267,7 @@ const MovieDetail = () => {
                     </Link>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="md:mt-4 ">
                     <h2 className="font-semibold">Facts</h2>
                     <ul>
                       <li>
