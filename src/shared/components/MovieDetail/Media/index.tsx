@@ -57,7 +57,7 @@ const Media = () => {
         </div>
       </div>
 
-      <Carousel title="" loading="succeeded" sectionMarginTop={4}>
+      <Carousel title="" loading="succeeded" sectionTop={4}>
         <div className="min-w-[500px] w-[500px] rounded-lg">
           <img src={mediabg} alt="" className="size-full object-cover" />
         </div>

@@ -4,7 +4,7 @@ const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <section className="min-h-[320px] h-max flex justify-center">
+    <section className="min-h-[320px] h-max flex justify-center bg-white">
       <div className="max-w-7xl px-10 w-full bg-dark_blue bg-home_hero bg-no-repeat bg-center bg-cover">
         <div className="h-full flex flex-col items-start justify-center">
           <div className="text-white mb-5">
