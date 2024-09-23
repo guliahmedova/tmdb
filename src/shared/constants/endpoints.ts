@@ -1,6 +1,6 @@
 export const MOVIE = {
   GET_TRENDS: "trending/all/",
-  GET_POPULAR: "movie/",
+  GET_MOVIE: "movie/",
 };
 
 export const SEARCH = {

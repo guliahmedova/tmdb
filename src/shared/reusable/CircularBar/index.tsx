@@ -1,5 +1,5 @@
 const CircularProgress = ({
-  percentage,
+  percentage = 50,
   top = 24,
   left = 12,
   size = 38,

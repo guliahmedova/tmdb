@@ -1,13 +1,14 @@
 import addIcon from "@/assets/imgs/add-list.svg";
 import arrowNext from "@/assets/imgs/arrow-next.svg";
+import closeIcon from "@/assets/imgs/close.svg";
 import downArrow from "@/assets/imgs/down-arrow.svg";
 import expand from "@/assets/imgs/expand.svg";
 import heartIcon from "@/assets/imgs/heart.svg";
 import info from "@/assets/imgs/info.svg";
-import m from "@/assets/imgs/m1.jpg";
-import closeIcon from "@/assets/imgs/close.svg";
 import playIcon from "@/assets/imgs/play.svg";
 import saveIcon from "@/assets/imgs/save.svg";
+import { RootState, useAppDispatch } from "@/redux/app/store";
+import { getMovieById, getMovieImagesById } from "@/redux/features/movieSlice";
 import CastCard from "@/shared/components/MovieDetail/CastCard";
 import ExpandModal from "@/shared/components/MovieDetail/ExpandModal";
 import Media from "@/shared/components/MovieDetail/Media";
@@ -15,8 +16,9 @@ import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
 import Carousel from "@/shared/reusable/Carousel";
 import CircularProgress from "@/shared/reusable/CircularBar";
 import PopupWrapper from "@/shared/reusable/PopupWrapper";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
 const MovieDetail = () => {
   const [activeSocialTab, setActiveSocialTab] = useState<
@@ -24,6 +26,23 @@ const MovieDetail = () => {
   >("review");
   const [isImageExpand, setImageExpend] = useState(false);
   const [isTrailerPopupVisible, setTrailerPopupVisibility] = useState(false);
+  const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+
+  const movie = useSelector((state: RootState) => state.movie.movieDetails);
+  const movieImages = useSelector(
+    (state: RootState) => state.movie.movieImages
+  );
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getMovieById({ movieId: id }));
+      dispatch(getMovieImagesById({ movieId: id }));
+    }
+  }, []);
+
+  console.log(movieImages);
 
   return (
     <>
@@ -47,15 +66,21 @@ const MovieDetail = () => {
               </ul>
             </div>
 
-            <div className="py-10 flex justify-center bg-black lg:px-0 px-10">
-              <div className="max-w-7xl w-full flex gap-6 md:flex-row flex-col md:px-0 px-10">
+            <div
+              className="py-10 flex justify-center lg:px-0 px-10 bg-no-repeat bg-center bg-cover relative"
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieImages?.posters?.[0].file_path})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-black opacity-80"></div>
+              <div className="max-w-7xl w-full flex gap-8 md:flex-row flex-col md:px-0 px-10 relative">
                 <div
-                  className="relative md:w-6/12 lg:w-3/12 cursor-pointer group rounded-lg bg-red-400 md:mx-0 mx-auto"
+                  className="relative w-[300px] h-[450px] cursor-pointer group rounded-lg bg-red-400 md:mx-0 mx-auto"
                   onClick={() => setImageExpend(true)}
                 >
                   <img
-                    src={m}
-                    alt=""
+                    src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
+                    alt={movie?.original_title}
                     className="size-full object-cover shadow rounded-lg"
                   />
                   <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex shadow">
@@ -72,7 +97,7 @@ const MovieDetail = () => {
 
                 <div className="md:mt-4">
                   <h2 className="md:text-4xl text-lg font-bold text-white md:text-left text-center">
-                    The Flash
+                    {movie?.original_title}
                     <span className="font-normal text-slate-50"> (2014)</span>
                   </h2>
 
@@ -90,19 +115,19 @@ const MovieDetail = () => {
                     </ul>
                   </div>
 
-                  <div className="md:my-8 my-3 flex items-center gap-4 relative md:justify-start justify-center">
+                  <div className="md:my-10 my-3 flex items-center gap-4 relative md:justify-start justify-center">
                     <CircularProgress
-                      percentage={78}
-                      top={0}
+                      percentage={movie?.vote_average}
+                      top={5}
                       left={0}
                       size={68}
                       width={64}
                       height={64}
                       percentageFontSize={8}
                       percentageTop={0}
-                      fontSize="lg"
+                      fontSize={18}
                     />
-                    <span className="font-bold text-white md:w-12 text-nowrap md:text-base text-xs lg:ml-20 lg:mr-10 hidden lg:inline-block">
+                    <span className="font-bold text-white lg:w-12 md:text-wrap text-nowrap md:text-base text-xs lg:ml-20 lg:mr-0 hidden lg:inline-block">
                       User Score
                     </span>
                     <span className="size-9 cursor-pointer lg:inline-block text-2xl scale-110 hover:scale-125 text-center relative group hidden">
@@ -153,15 +178,14 @@ const MovieDetail = () => {
 
                   <div className="mt-8">
                     <span className="font-medium text-slate-100 italic">
-                      Revenge is a witch.
+                      {movie?.tagline}
                     </span>
                     <div>
                       <h5 className="font-bold md:text-lg text-white">
                         Overview
                       </h5>
                       <p className="font-medium text-xs md:text-base text-slate-100">
-                        Agatha Harkness gathers a coven of witches and sets off
-                        down, down, down The Witches' Road.
+                        {movie?.overview}
                       </p>
                     </div>
                     <div className="mt-4">
@@ -273,12 +297,24 @@ const MovieDetail = () => {
                       <li>
                         <h2 className="font-semibold mt-2">Status</h2>
                         <p className="text-gray-400 font-medium">
-                          Returning Series
+                          {movie?.status}
                         </p>
                       </li>
                       <li>
                         <h2 className="font-semibold mt-2">Type</h2>
                         <p className="text-gray-400 font-medium">Miniseries</p>
+                      </li>
+                      <li>
+                        <h2 className="font-semibold mt-2">Revenue</h2>
+                        <p className="text-gray-400 font-medium">
+                          ${movie?.revenue}
+                        </p>
+                      </li>
+                      <li>
+                        <h2 className="font-semibold mt-2">Budget</h2>
+                        <p className="text-gray-400 font-medium">
+                          ${movie?.budget}
+                        </p>
                       </li>
                       <li>
                         <h2 className="font-semibold mt-2">
@@ -288,7 +324,7 @@ const MovieDetail = () => {
                       </li>
                       <li>
                         <h2 className="font-semibold mt-2">Keywords</h2>
-                        <ul>
+                        <ul className="mt-2">
                           <li className="border bg-gray-100 p-1 rounded-lg shadow w-fit text-gray-600 text-xs">
                             witch
                           </li>

@@ -18,8 +18,6 @@ const Carousel = ({
   loading,
   sectionTop = 2,
 }: ICarousel) => {
-  console.log(sectionTop);
-
   return (
     <section
       className="flex justify-center min-h-96 bg-white"
