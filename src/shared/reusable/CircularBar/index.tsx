@@ -1,13 +1,13 @@
 const CircularProgress = ({
   percentage,
-  top = 8,
-  left = 4,
+  top = 24,
+  left = 12,
   size = 38,
   width = 34,
   height = 34,
-  fontSize = "base",
-  percentageFontSize = 4,
-  percentageTop = 1,
+  fontSize = 14,
+  percentageFontSize = 6,
+  percentageTop = 2,
 }: {
   percentage: number;
   top?: number;
@@ -15,7 +15,7 @@ const CircularProgress = ({
   size?: number;
   width?: number;
   height?: number;
-  fontSize?: string;
+  fontSize?: number;
   percentageFontSize?: number;
   percentageTop?: number;
 }) => {
@@ -53,11 +53,17 @@ const CircularProgress = ({
 
   return (
     <div
-      className={`absolute -top-${top} left-${left} size-[${size}] bg-dark_blue rounded-full flex justify-center items-center hover:scale-105 cursor-pointer`}
+      className="absolute bg-dark_blue rounded-full flex justify-center items-center hover:scale-105 cursor-pointer"
+      style={{
+        width: size,
+        height: size,
+        top: -top,
+        left: left,
+      }}
     >
       <svg
-        width={`${width}px`}
-        height={`${height}px`}
+        width={width}
+        height={height}
         viewBox="0 0 100 100"
         className="-rotate-90"
       >
@@ -84,12 +90,21 @@ const CircularProgress = ({
           className="scale-[0.95]"
         />
       </svg>
-      <div className={`font-semibold absolute text-white text-${fontSize}`}>
+      <div
+        className="font-semibold absolute text-white"
+        style={{
+          fontSize: `${fontSize}px`,
+        }}
+      >
         {percentage ? (
           <>
             {percentage.toFixed(0)}
             <span
-              className={`absolute text-[${percentageFontSize}px] top-${percentageTop}`}
+              className="absolute"
+              style={{
+                fontSize: `${percentageFontSize}px`,
+                top: percentageTop,
+              }}
             >
               %
             </span>

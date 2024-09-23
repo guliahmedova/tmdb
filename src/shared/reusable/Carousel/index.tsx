@@ -16,11 +16,16 @@ const Carousel = ({
   children,
   tabChildren,
   loading,
-  sectionTop = 8,
+  sectionTop = 2,
 }: ICarousel) => {
+  console.log(sectionTop);
+
   return (
     <section
-      className={`flex justify-center min-h-96 py-${sectionTop} bg-white`}
+      className="flex justify-center min-h-96 bg-white"
+      style={{
+        paddingBlock: `${sectionTop}rem`,
+      }}
     >
       <div
         className={`max-w-7xl w-full bg-white ${

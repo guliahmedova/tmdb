@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FilterHeader from "../FilterHeader";
 import Select from "react-select";
+import RangeSlider from "../RangeSlider";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -191,12 +192,14 @@ const Filters = () => {
 
           <div className="p-4 border-t">
             <p className="text-gray-500">User Score</p>
+            <RangeSlider />
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500">Minimum User Votes</p>
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500">Runtime</p>
+            <RangeSlider />
           </div>
 
           <div className="p-4 border-t">
