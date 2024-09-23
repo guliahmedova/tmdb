@@ -1,12 +1,7 @@
-import addIcon from "@/assets/imgs/add-list.svg";
 import arrowNext from "@/assets/imgs/arrow-next.svg";
 import closeIcon from "@/assets/imgs/close.svg";
 import downArrow from "@/assets/imgs/down-arrow.svg";
-import expand from "@/assets/imgs/expand.svg";
-import heartIcon from "@/assets/imgs/heart.svg";
-import info from "@/assets/imgs/info.svg";
 import playIcon from "@/assets/imgs/play.svg";
-import saveIcon from "@/assets/imgs/save.svg";
 import { RootState, useAppDispatch } from "@/redux/app/store";
 import {
   getMovieById,
@@ -18,14 +13,13 @@ import {
   getMovieVideosById,
 } from "@/redux/features/movieSlice";
 import CastCard from "@/shared/components/MovieDetail/Casts/CastCard";
+import DetailBanner from "@/shared/components/MovieDetail/DetailBanner";
 import ExpandModal from "@/shared/components/MovieDetail/ExpandModal";
 import Media from "@/shared/components/MovieDetail/Media";
 import RecommendationCard from "@/shared/components/MovieDetail/RecommendationCard";
 import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
 import Carousel from "@/shared/reusable/Carousel";
-import CircularProgress from "@/shared/reusable/CircularBar";
 import PopupWrapper from "@/shared/reusable/PopupWrapper";
-import { getImageUrl } from "@/shared/utils/getImageUrl";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -84,7 +78,16 @@ const MovieDetail = () => {
               </ul>
             </div>
 
-            <div
+            <DetailBanner
+              title={movie.title}
+              genres={movie?.genres}
+              overview={movie.overview}
+              vote_average={movie?.vote_average}
+              movieImage={movie.backdrop_path}
+              images={movieImages}
+            />
+
+            {/* <div
               className="py-10 flex justify-center lg:px-0 px-10 bg-no-repeat bg-center bg-cover relative"
               // style={{
               //   backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieImages?.posters?.[0].file_path})`,
@@ -222,7 +225,7 @@ const MovieDetail = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-4 flex justify-center">
@@ -264,7 +267,7 @@ const MovieDetail = () => {
                           } cursor-pointer`}
                           onClick={() => setActiveSocialTab("review")}
                         >
-                          Reviews 0
+                          Reviews {movieReviews?.length}
                         </span>
                         <span
                           className={`pb-2 ${
@@ -319,7 +322,7 @@ const MovieDetail = () => {
                 </div>
 
                 <div className="w-full md:px-0 px-8 md:pb-0 pb-4">
-                  <div className="md:flex hidden items-center gap-5">
+                  <div className="md:flex hidden items-center gap-5 flex-wrap">
                     <button className="bg-sky-500 shadow-lg text-white font-semibold rounded-lg px-3 py-2 text-nowrap flex items-center gap-3">
                       <img
                         src={playIcon}

@@ -98,8 +98,6 @@ const Media = ({
     }
   };
 
-  // 933260
-
   return (
     <div className="md:border-b mt-10">
       <div className="flex items-center gap-5 pl-10">
