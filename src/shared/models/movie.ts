@@ -20,6 +20,11 @@ export interface IMovie {
   vote_count: number;
 }
 
+export interface IMovieDate {
+  maximum: string;
+  minimum: string;
+}
+
 export interface IMovieDetail {
   adult: boolean;
   backdrop_path: any;
@@ -72,11 +77,12 @@ export interface SpokenLanguage {
   name: string;
 }
 
-export interface ITrendingMovieResponse {
+export interface IMovieResponse {
   page: number;
   results: IMovie[];
   total_pages: number;
   total_results: number;
+  dates?: IMovieDate;
 }
 
 export interface IMovieImageResponse {

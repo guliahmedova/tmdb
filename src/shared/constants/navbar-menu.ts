@@ -8,22 +8,22 @@ export const dropdownMenu = [
       {
         id: uuid(),
         subtitle: "Popular",
-        to: "movie",
+        to: "/filter/popular",
       },
       {
         id: uuid(),
         subtitle: "Now Playing",
-        to: "now-playing",
+        to: "/filter/now_playing",
       },
       {
         id: uuid(),
         subtitle: "Upcoming",
-        to: "upcoming",
+        to: "/filter/upcoming",
       },
       {
         id: uuid(),
         subtitle: "Top Rated",
-        to: "top-rated",
+        to: "/filter/top_rated",
       },
     ],
   },
@@ -34,22 +34,22 @@ export const dropdownMenu = [
       {
         id: uuid(),
         subtitle: "Popular",
-        to: "tv",
+        to: "/filter/tv",
       },
       {
         id: uuid(),
         subtitle: "Airing Today",
-        to: "airing-today",
+        to: "/filter/airing_today",
       },
       {
         id: uuid(),
         subtitle: "On TV",
-        to: "on-the-air",
+        to: "/filter/on_the_air",
       },
       {
         id: uuid(),
         subtitle: "Top Rated",
-        to: "top-rated",
+        to: "/filter/top_rated",
       },
     ],
   },

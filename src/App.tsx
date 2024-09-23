@@ -14,7 +14,7 @@ const App = () => {
       <Route element={<PageLayout />}>
         <Route index path="/" element={<Home />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
-        <Route path="/filter" element={<Filter />} />
+        <Route path="/filter/:path" element={<Filter />} />
         <Route path="/:id/cast" element={<Casts />} />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/login" element={<Login />} />

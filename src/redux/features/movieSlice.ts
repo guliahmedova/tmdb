@@ -10,18 +10,17 @@ import {
   IMovieKeywordsResponse,
   IMovieRecommendation,
   IMovieRecommendationResponse,
+  IMovieResponse,
   IMovieReview,
   IMovieReviewsResponse,
   IMovieVideo,
   IMovieVideoResponse,
-  ITrendingMovieResponse,
 } from "@/shared/models/movie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../app/axiosConfig";
 
 interface MovieState {
   trendingMovies: IMovie[];
-  popularMovies: IMovie[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
   movieDetails: IMovieDetail;
@@ -32,12 +31,12 @@ interface MovieState {
   movieCrews: IMovieCrew[];
   movieRecommendations: IMovieRecommendation[];
   movieVideos: IMovieVideo[];
+  movies: IMovie[];
 }
 
 const initialState: MovieState = {
   trendingMovies: [],
   loading: "idle",
-  popularMovies: [],
   error: null,
   movieDetails: {} as IMovieDetail,
   movieImages: {} as IMovieImageResponse,
@@ -47,6 +46,7 @@ const initialState: MovieState = {
   movieCrews: [],
   movieRecommendations: [],
   movieVideos: [],
+  movies: [],
 };
 
 export const getTrendingMovies = createAsyncThunk(
@@ -58,7 +58,7 @@ export const getTrendingMovies = createAsyncThunk(
     time_window: string;
     language?: string;
   }) => {
-    const res = await instance.get<ITrendingMovieResponse>(
+    const res = await instance.get<IMovieResponse>(
       `${MOVIE.GET_TRENDS}${time_window}?language=${language}`
     );
     return res.data;
@@ -152,19 +152,19 @@ export const getMovieCreditsById = createAsyncThunk(
   }
 );
 
-export const getPopularMovies = createAsyncThunk(
-  "movie/getPopularMovies",
+export const getMovieListByPathKey = createAsyncThunk(
+  "movie/getMovieListByPathKey",
   async ({
-    query,
     page = 1,
     language = "en-US",
+    pathKey,
   }: {
-    query: string;
     page?: number;
     language?: string;
+    pathKey: string;
   }) => {
     const res = await instance.get(
-      `${MOVIE.GET_MOVIE}${query}?language=${language}&page=${page}`
+      `${MOVIE.GET_MOVIE}${pathKey}?language=${language}&page=${page}`
     );
 
     return res.data;
@@ -207,14 +207,14 @@ const movieSlice = createSlice({
       state.error = action.error.message || "Failed to fetch trending movies";
     });
 
-    builder.addCase(getPopularMovies.fulfilled, (state, action) => {
-      state.popularMovies = action.payload.results;
+    builder.addCase(getMovieListByPathKey.fulfilled, (state, action) => {
+      state.movies = action.payload.results;
       state.loading = "succeeded";
     });
-    builder.addCase(getPopularMovies.pending, (state) => {
+    builder.addCase(getMovieListByPathKey.pending, (state) => {
       state.loading = "pending";
     });
-    builder.addCase(getPopularMovies.rejected, (state, action) => {
+    builder.addCase(getMovieListByPathKey.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.error.message || "Failed to fetch trending movies";
     });
