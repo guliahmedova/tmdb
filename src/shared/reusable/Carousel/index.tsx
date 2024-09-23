@@ -28,7 +28,7 @@ const Carousel = ({
       <div
         className={`max-w-7xl w-full bg-white ${
           bgImage
-            ? `bg-${bgImage} bg-no-repeat bg-contain xl:bg-bottom bg-center`
+            ? `bg-trending bg-no-repeat bg-contain xl:bg-bottom bg-center`
             : ""
         }`}
       >

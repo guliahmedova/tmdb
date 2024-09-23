@@ -1,20 +1,22 @@
 export interface IMovie {
-  adult: boolean;
-  backdrop_path: string;
-  first_air_date?: string;
-  release_date?: string;
-  genre_ids: number[];
-  id: number;
-  media_type: string;
-  name: string;
-  origin_country: string[];
-  original_language: string;
+  name?: string;
   original_name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_title: string;
   overview: string;
-  popularity: number;
   poster_path: string;
+  media_type: string;
+  adult: boolean;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
   vote_average: number;
-  original_title?: string;
   vote_count: number;
 }
 
@@ -112,4 +114,74 @@ export interface Poster {
   vote_average: number;
   vote_count: number;
   width: number;
+}
+
+export interface IMovieKeywordsResponse {
+  id: number;
+  keywords: IMovieKeyword[];
+}
+
+export interface IMovieKeyword {
+  id: number;
+  name: string;
+}
+
+export interface IMovieReviewsResponse {
+  id: number;
+  page: number;
+  results: IMovieReview[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IMovieReview {
+  author: string;
+  author_details: IMovieReviewAuthorDetails;
+  content: string;
+  created_at: string;
+  id: string;
+  updated_at: string;
+  url: string;
+}
+
+export interface IMovieReviewAuthorDetails {
+  name: string;
+  username: string;
+  avatar_path: string;
+  rating: number;
+}
+
+export interface IMovieCreditsResponse {
+  id: number;
+  cast: IMovieCredit[];
+  crew: IMovieCrew[];
+}
+
+export interface IMovieCredit {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface IMovieCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  credit_id: string;
+  department: string;
+  job: string;
 }

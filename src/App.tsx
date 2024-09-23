@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import MovieDetail from "./pages/Movie/Detail";
 import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
+import Casts from "./shared/components/MovieDetail/Casts";
 import PageLayout from "./shared/layout/PageLayout";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Route index path="/" element={<Home />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route index path="/filter" element={<Filter />} />
+        <Route index path="/:id/cast" element={<Casts />} />
         <Route index path="/search" element={<SearchResult />} />
         <Route index path="/login" element={<Login />} />
       </Route>

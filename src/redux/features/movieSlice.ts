@@ -1,8 +1,15 @@
 import { MOVIE } from "@/shared/constants/endpoints";
 import {
   IMovie,
+  IMovieCredit,
+  IMovieCreditsResponse,
+  IMovieCrew,
   IMovieDetail,
   IMovieImageResponse,
+  IMovieKeyword,
+  IMovieKeywordsResponse,
+  IMovieReview,
+  IMovieReviewsResponse,
   ITrendingMovieResponse,
 } from "@/shared/models/movie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -15,6 +22,10 @@ interface MovieState {
   error: string | null;
   movieDetails: IMovieDetail;
   movieImages: IMovieImageResponse;
+  movieKeywords: IMovieKeyword[];
+  movieReviews: IMovieReview[];
+  movieCredits: IMovieCredit[];
+  movieCrews: IMovieCrew[];
 }
 
 const initialState: MovieState = {
@@ -24,6 +35,10 @@ const initialState: MovieState = {
   error: null,
   movieDetails: {} as IMovieDetail,
   movieImages: {} as IMovieImageResponse,
+  movieKeywords: [],
+  movieReviews: [],
+  movieCredits: [],
+  movieCrews: [],
 };
 
 export const getTrendingMovies = createAsyncThunk(
@@ -64,6 +79,50 @@ export const getMovieImagesById = createAsyncThunk(
   async ({ movieId }: { movieId: string }) => {
     const res = await instance.get<IMovieImageResponse>(
       `${MOVIE.GET_MOVIE}${movieId}/images`
+    );
+    return res.data;
+  }
+);
+
+export const getMovieKeywordsById = createAsyncThunk(
+  "movie/getMovieKeywordsById",
+  async ({ movieId }: { movieId: string }) => {
+    const res = await instance.get<IMovieKeywordsResponse>(
+      `${MOVIE.GET_MOVIE}${movieId}/keywords`
+    );
+    return res.data;
+  }
+);
+
+export const getMovieReviewsById = createAsyncThunk(
+  "movie/getMovieReviewsById",
+  async ({
+    movieId,
+    page = 1,
+    language = "en-US",
+  }: {
+    movieId: string;
+    page?: number;
+    language?: string;
+  }) => {
+    const res = await instance.get<IMovieReviewsResponse>(
+      `${MOVIE.GET_MOVIE}${movieId}/reviews?language=${language}&page=${page}`
+    );
+    return res.data;
+  }
+);
+
+export const getMovieCreditsById = createAsyncThunk(
+  "movie/getMovieCreditsById",
+  async ({
+    movieId,
+    language = "en-US",
+  }: {
+    movieId: string;
+    language?: string;
+  }) => {
+    const res = await instance.get<IMovieCreditsResponse>(
+      `${MOVIE.GET_MOVIE}${movieId}/credits?language=${language}`
     );
     return res.data;
   }
@@ -137,6 +196,31 @@ const movieSlice = createSlice({
       state.loading = "pending";
     });
     builder.addCase(getMovieImagesById.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error.message || "Failed to fetch trending movies";
+    });
+
+    builder.addCase(getMovieReviewsById.fulfilled, (state, action) => {
+      state.movieReviews = action.payload.results;
+      state.loading = "succeeded";
+    });
+    builder.addCase(getMovieReviewsById.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(getMovieReviewsById.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error.message || "Failed to fetch trending movies";
+    });
+
+    builder.addCase(getMovieCreditsById.fulfilled, (state, action) => {
+      state.movieCredits = action.payload.cast;
+      state.movieCrews = action.payload.crew;
+      state.loading = "succeeded";
+    });
+    builder.addCase(getMovieCreditsById.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(getMovieCreditsById.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.error.message || "Failed to fetch trending movies";
     });

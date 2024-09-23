@@ -2,6 +2,7 @@ import { RootState, useAppDispatch } from "@/redux/app/store";
 import { getTrendingMovies } from "@/redux/features/movieSlice";
 import Hero from "@/shared/components/Home/Hero";
 import { trendingTabs } from "@/shared/constants/tabs";
+import { IMovie } from "@/shared/models/movie";
 import Carousel from "@/shared/reusable/Carousel";
 import CarouselCard from "@/shared/reusable/Carousel/Card";
 import SlidingTabBar from "@/shared/reusable/Carousel/SlidingTabBar";
@@ -27,7 +28,7 @@ const Home = () => {
 
       <Carousel
         title="Trending"
-        bgImage="trending"
+        bgImage={`trending`}
         loading="succeeded"
         tabChildren={
           <SlidingTabBar
@@ -37,7 +38,7 @@ const Home = () => {
           />
         }
       >
-        {trendingMovies?.map((movie) => (
+        {trendingMovies?.map((movie: IMovie) => (
           <CarouselCard key={movie.id} movie={movie} bgBlur={true} />
         ))}
       </Carousel>

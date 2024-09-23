@@ -8,14 +8,21 @@ import info from "@/assets/imgs/info.svg";
 import playIcon from "@/assets/imgs/play.svg";
 import saveIcon from "@/assets/imgs/save.svg";
 import { RootState, useAppDispatch } from "@/redux/app/store";
-import { getMovieById, getMovieImagesById } from "@/redux/features/movieSlice";
-import CastCard from "@/shared/components/MovieDetail/CastCard";
+import {
+  getMovieById,
+  getMovieCreditsById,
+  getMovieImagesById,
+  getMovieKeywordsById,
+  getMovieReviewsById,
+} from "@/redux/features/movieSlice";
+import CastCard from "@/shared/components/MovieDetail/Casts/CastCard";
 import ExpandModal from "@/shared/components/MovieDetail/ExpandModal";
 import Media from "@/shared/components/MovieDetail/Media";
 import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
 import Carousel from "@/shared/reusable/Carousel";
 import CircularProgress from "@/shared/reusable/CircularBar";
 import PopupWrapper from "@/shared/reusable/PopupWrapper";
+import { getImageUrl } from "@/shared/utils/getImageUrl";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -34,15 +41,30 @@ const MovieDetail = () => {
   const movieImages = useSelector(
     (state: RootState) => state.movie.movieImages
   );
+  const movieKeywords = useSelector(
+    (state: RootState) => state.movie.movieKeywords
+  );
+  const movieReviews = useSelector(
+    (state: RootState) => state.movie.movieReviews
+  );
+  const movieCredits = useSelector(
+    (state: RootState) => state.movie.movieCredits
+  );
 
   useEffect(() => {
     if (id) {
       dispatch(getMovieById({ movieId: id }));
       dispatch(getMovieImagesById({ movieId: id }));
+      dispatch(getMovieKeywordsById({ movieId: id }));
+      dispatch(getMovieReviewsById({ movieId: id }));
+      dispatch(getMovieCreditsById({ movieId: id }));
     }
   }, []);
 
-  console.log(movieImages);
+  // console.log(movie);
+  // console.log(movieImages);
+  // console.log(movieKeywords);
+  console.log(movieCredits);
 
   return (
     <>
@@ -68,32 +90,34 @@ const MovieDetail = () => {
 
             <div
               className="py-10 flex justify-center lg:px-0 px-10 bg-no-repeat bg-center bg-cover relative"
-              style={{
-                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieImages?.posters?.[0].file_path})`,
-              }}
+              // style={{
+              //   backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieImages?.posters?.[0].file_path})`,
+              // }}
             >
               <div className="absolute inset-0 bg-black opacity-80"></div>
               <div className="max-w-7xl w-full flex gap-8 md:flex-row flex-col md:px-0 px-10 relative">
-                <div
-                  className="relative w-[300px] h-[450px] cursor-pointer group rounded-lg bg-red-400 md:mx-0 mx-auto"
-                  onClick={() => setImageExpend(true)}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
-                    alt={movie?.original_title}
-                    className="size-full object-cover shadow rounded-lg"
-                  />
-                  <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex shadow">
-                    <div className="flex xl:gap-3 items-center xl:flex-row flex-col">
-                      <img
-                        src={expand}
-                        alt="expand"
-                        className="xl:size-10 size-6"
-                      />
-                      <span className="text-white font-bold">Expand</span>
+                {movie?.poster_path && (
+                  <div
+                    className="relative w-[300px] h-[450px] cursor-pointer group rounded-lg md:mx-0 mx-auto"
+                    onClick={() => setImageExpend(true)}
+                  >
+                    <img
+                      src={getImageUrl(movie?.poster_path)}
+                      alt={movie?.original_title}
+                      className="w-full h-full object-cover shadow rounded-lg"
+                    />
+                    <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex shadow">
+                      <div className="flex xl:gap-3 items-center xl:flex-row flex-col">
+                        <img
+                          src={expand}
+                          alt="expand"
+                          className="xl:size-10 size-6"
+                        />
+                        <span className="text-white font-bold">Expand</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 <div className="md:mt-4">
                   <h2 className="md:text-4xl text-lg font-bold text-white md:text-left text-center">
@@ -209,24 +233,26 @@ const MovieDetail = () => {
             <div className="max-w-7xl w-full">
               <div className="flex md:flex-row flex-col gap-4">
                 <div className="md:w-[80%] w-full">
-                  <Carousel title="Series Cast" loading="succeeded">
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <CastCard />
-                    <div className="min-w-36 w-36 text-xs ml-4 h-[270px] flex gap-2 items-center justify-center">
-                      <Link to="#" className="hover:text-gray-500">
-                        View More
-                      </Link>
-                      <img src={arrowNext} className="size-6" alt="view more" />
-                    </div>
-                  </Carousel>
+                  {movieCredits?.length > 0 && (
+                    <Carousel title="Series Cast" loading="succeeded">
+                      {movieCredits?.slice(0, 9)?.map((credit) => (
+                        <CastCard key={credit.id} credit={credit} />
+                      ))}
+                      <div className="min-w-36 w-36 text-xs ml-4 h-[270px] flex gap-2 items-center justify-center">
+                        <Link
+                          to={`/${id}/cast`}
+                          className="hover:text-gray-500"
+                        >
+                          View More
+                        </Link>
+                        <img
+                          src={arrowNext}
+                          className="size-6"
+                          alt="view more"
+                        />
+                      </div>
+                    </Carousel>
+                  )}
 
                   <div className="border-b pb-4">
                     <div className="flex items-center gap-5 pl-10">
@@ -259,11 +285,16 @@ const MovieDetail = () => {
 
                     <div className="mt-4 flex flex-col gap-4 md:px-0 px-8">
                       {activeSocialTab === "review" ? (
-                        // <p className="text-slate-500 pl-10">
-                        //   We don't have any reviews for Agatha All Along. Would
-                        //   you like to write one?
-                        // </p>
-                        <ReviewsCard />
+                        movieReviews?.length > 0 ? (
+                          movieReviews?.map((review) => (
+                            <ReviewsCard key={review.id} review={review} />
+                          ))
+                        ) : (
+                          <p className="text-slate-500 pl-10">
+                            We don't have any reviews for Agatha All Along.
+                            Would you like to write one?
+                          </p>
+                        )
                       ) : (
                         <p className="text-slate-500 pl-10">
                           We don't have any discussions for Agatha All Along.
@@ -278,7 +309,7 @@ const MovieDetail = () => {
 
                 <div className="w-full md:px-0 px-8 md:pb-0 pb-4">
                   <div className="md:flex hidden items-center gap-5">
-                    <button className="bg-sky-500 shadow-lg text-white font-semibold rounded-lg px-4 py-2 flex items-center gap-3 w-28">
+                    <button className="bg-sky-500 shadow-lg text-white font-semibold rounded-lg px-3 py-2 text-nowrap flex items-center gap-3">
                       <img
                         src={playIcon}
                         alt="play now"
@@ -322,14 +353,21 @@ const MovieDetail = () => {
                         </h2>
                         <p className="text-gray-400 font-medium">English</p>
                       </li>
-                      <li>
-                        <h2 className="font-semibold mt-2">Keywords</h2>
-                        <ul className="mt-2">
-                          <li className="border bg-gray-100 p-1 rounded-lg shadow w-fit text-gray-600 text-xs">
-                            witch
-                          </li>
-                        </ul>
-                      </li>
+                      {movieKeywords?.length > 0 && (
+                        <li>
+                          <h2 className="font-semibold mt-2">Keywords</h2>
+                          <ul className="mt-2 flex gap-2 flex-wrap">
+                            {movieKeywords?.map((keyword) => (
+                              <li
+                                className="border bg-gray-100 p-1 rounded-lg shadow w-fit text-gray-600 text-xs"
+                                key={keyword.id}
+                              >
+                                {keyword.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </div>
