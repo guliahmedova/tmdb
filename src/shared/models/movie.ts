@@ -185,3 +185,46 @@ export interface IMovieCrew {
   department: string;
   job: string;
 }
+
+export interface IMovieRecommendationResponse {
+  page: number;
+  results: IMovieRecommendation[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IMovieRecommendation {
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  adult: boolean;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface IMovieVideoResponse {
+  id: number;
+  results: IMovieVideo[];
+}
+
+export interface IMovieVideo {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  id: string;
+}

@@ -13,11 +13,14 @@ import {
   getMovieCreditsById,
   getMovieImagesById,
   getMovieKeywordsById,
+  getMovieRecommendationsById,
   getMovieReviewsById,
+  getMovieVideosById,
 } from "@/redux/features/movieSlice";
 import CastCard from "@/shared/components/MovieDetail/Casts/CastCard";
 import ExpandModal from "@/shared/components/MovieDetail/ExpandModal";
 import Media from "@/shared/components/MovieDetail/Media";
+import RecommendationCard from "@/shared/components/MovieDetail/RecommendationCard";
 import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
 import Carousel from "@/shared/reusable/Carousel";
 import CircularProgress from "@/shared/reusable/CircularBar";
@@ -38,18 +41,14 @@ const MovieDetail = () => {
   const dispatch = useAppDispatch();
 
   const movie = useSelector((state: RootState) => state.movie.movieDetails);
-  const movieImages = useSelector(
-    (state: RootState) => state.movie.movieImages
-  );
-  const movieKeywords = useSelector(
-    (state: RootState) => state.movie.movieKeywords
-  );
-  const movieReviews = useSelector(
-    (state: RootState) => state.movie.movieReviews
-  );
-  const movieCredits = useSelector(
-    (state: RootState) => state.movie.movieCredits
-  );
+  const {
+    movieImages,
+    movieKeywords,
+    movieReviews,
+    movieCredits,
+    movieRecommendations,
+    movieVideos,
+  } = useSelector((state: RootState) => state.movie);
 
   useEffect(() => {
     if (id) {
@@ -58,13 +57,10 @@ const MovieDetail = () => {
       dispatch(getMovieKeywordsById({ movieId: id }));
       dispatch(getMovieReviewsById({ movieId: id }));
       dispatch(getMovieCreditsById({ movieId: id }));
+      dispatch(getMovieRecommendationsById({ movieId: id }));
+      dispatch(getMovieVideosById({ movieId: id }));
     }
   }, []);
-
-  // console.log(movie);
-  // console.log(movieImages);
-  // console.log(movieKeywords);
-  console.log(movieCredits);
 
   return (
     <>
@@ -278,7 +274,7 @@ const MovieDetail = () => {
                           } cursor-pointer`}
                           onClick={() => setActiveSocialTab("discussion")}
                         >
-                          Discussions 2
+                          Discussions 0
                         </span>
                       </div>
                     </div>
@@ -291,20 +287,35 @@ const MovieDetail = () => {
                           ))
                         ) : (
                           <p className="text-slate-500 pl-10">
-                            We don't have any reviews for Agatha All Along.
-                            Would you like to write one?
+                            We don't have any reviews for {movie.title}. Would
+                            you like to write one?
                           </p>
                         )
                       ) : (
                         <p className="text-slate-500 pl-10">
-                          We don't have any discussions for Agatha All Along.
-                          Would you like to write one?
+                          We don't have any discussions for {movie.title}. Would
+                          you like to write one?
                         </p>
                       )}
                     </div>
                   </div>
 
-                  <Media />
+                  <Media movieImages={movieImages} movieVideos={movieVideos} />
+
+                  {movieRecommendations?.length > 0 && (
+                    <Carousel
+                      title="Recommendations"
+                      loading="succeeded"
+                      sectionTop={1}
+                    >
+                      {movieRecommendations?.map((recommendation) => (
+                        <RecommendationCard
+                          key={recommendation.id}
+                          recommendation={recommendation}
+                        />
+                      ))}
+                    </Carousel>
+                  )}
                 </div>
 
                 <div className="w-full md:px-0 px-8 md:pb-0 pb-4">
@@ -331,10 +342,14 @@ const MovieDetail = () => {
                           {movie?.status}
                         </p>
                       </li>
-                      <li>
-                        <h2 className="font-semibold mt-2">Type</h2>
-                        <p className="text-gray-400 font-medium">Miniseries</p>
-                      </li>
+                      {movie?.genres?.length > 0 && (
+                        <li>
+                          <h2 className="font-semibold mt-2">Type</h2>
+                          <p className="text-gray-400 font-medium">
+                            {movie?.genres?.[0].name}
+                          </p>
+                        </li>
+                      )}
                       <li>
                         <h2 className="font-semibold mt-2">Revenue</h2>
                         <p className="text-gray-400 font-medium">
@@ -351,23 +366,29 @@ const MovieDetail = () => {
                         <h2 className="font-semibold mt-2">
                           Original Language
                         </h2>
-                        <p className="text-gray-400 font-medium">English</p>
+                        <p className="text-gray-400 font-medium">
+                          {movie.original_language}
+                        </p>
                       </li>
-                      {movieKeywords?.length > 0 && (
-                        <li>
-                          <h2 className="font-semibold mt-2">Keywords</h2>
-                          <ul className="mt-2 flex gap-2 flex-wrap">
-                            {movieKeywords?.map((keyword) => (
+                      <li>
+                        <h2 className="font-semibold mt-2">Keywords</h2>
+                        <ul className="mt-2 flex gap-2 flex-wrap">
+                          {movieKeywords?.length > 0 ? (
+                            movieKeywords?.map((keyword) => (
                               <li
                                 className="border bg-gray-100 p-1 rounded-lg shadow w-fit text-gray-600 text-xs"
                                 key={keyword.id}
                               >
                                 {keyword.name}
                               </li>
-                            ))}
-                          </ul>
-                        </li>
-                      )}
+                            ))
+                          ) : (
+                            <p className="text-slate-400">
+                              No keywords have been added.
+                            </p>
+                          )}
+                        </ul>
+                      </li>
                     </ul>
                   </div>
                 </div>

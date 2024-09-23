@@ -8,8 +8,12 @@ import {
   IMovieImageResponse,
   IMovieKeyword,
   IMovieKeywordsResponse,
+  IMovieRecommendation,
+  IMovieRecommendationResponse,
   IMovieReview,
   IMovieReviewsResponse,
+  IMovieVideo,
+  IMovieVideoResponse,
   ITrendingMovieResponse,
 } from "@/shared/models/movie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -26,6 +30,8 @@ interface MovieState {
   movieReviews: IMovieReview[];
   movieCredits: IMovieCredit[];
   movieCrews: IMovieCrew[];
+  movieRecommendations: IMovieRecommendation[];
+  movieVideos: IMovieVideo[];
 }
 
 const initialState: MovieState = {
@@ -39,6 +45,8 @@ const initialState: MovieState = {
   movieReviews: [],
   movieCredits: [],
   movieCrews: [],
+  movieRecommendations: [],
+  movieVideos: [],
 };
 
 export const getTrendingMovies = createAsyncThunk(
@@ -94,6 +102,22 @@ export const getMovieKeywordsById = createAsyncThunk(
   }
 );
 
+export const getMovieVideosById = createAsyncThunk(
+  "movie/getMovieVideosById",
+  async ({
+    movieId,
+    language = "en-US",
+  }: {
+    movieId: string;
+    language?: string;
+  }) => {
+    const res = await instance.get<IMovieVideoResponse>(
+      `${MOVIE.GET_MOVIE}${movieId}/videos?language=${language}`
+    );
+    return res.data;
+  }
+);
+
 export const getMovieReviewsById = createAsyncThunk(
   "movie/getMovieReviewsById",
   async ({
@@ -141,6 +165,25 @@ export const getPopularMovies = createAsyncThunk(
   }) => {
     const res = await instance.get(
       `${MOVIE.GET_MOVIE}${query}?language=${language}&page=${page}`
+    );
+
+    return res.data;
+  }
+);
+
+export const getMovieRecommendationsById = createAsyncThunk(
+  "movie/getMovieRecommendationsById",
+  async ({
+    movieId,
+    page = 1,
+    language = "en-US",
+  }: {
+    movieId: string;
+    page?: number;
+    language?: string;
+  }) => {
+    const res = await instance.get<IMovieRecommendationResponse>(
+      `${MOVIE.GET_MOVIE}${movieId}/recommendations?language=${language}&page=${page}`
     );
 
     return res.data;
@@ -221,6 +264,30 @@ const movieSlice = createSlice({
       state.loading = "pending";
     });
     builder.addCase(getMovieCreditsById.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error.message || "Failed to fetch trending movies";
+    });
+
+    builder.addCase(getMovieRecommendationsById.fulfilled, (state, action) => {
+      state.movieRecommendations = action.payload.results;
+      state.loading = "succeeded";
+    });
+    builder.addCase(getMovieRecommendationsById.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(getMovieRecommendationsById.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error.message || "Failed to fetch trending movies";
+    });
+
+    builder.addCase(getMovieVideosById.fulfilled, (state, action) => {
+      state.movieVideos = action.payload.results;
+      state.loading = "succeeded";
+    });
+    builder.addCase(getMovieVideosById.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(getMovieVideosById.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.error.message || "Failed to fetch trending movies";
     });

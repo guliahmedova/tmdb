@@ -17,7 +17,6 @@ const CastCard = ({ credit }: { credit: IMovieCredit }) => {
           <span className="block text-sm text-slate-600">
             {credit.name} ({credit.known_for_department}){" "}
           </span>
-          {/* <span className="block text-sm text-slate-500">9 Episodes</span> */}
         </p>
       </div>
     </div>
