@@ -16,3 +16,7 @@ export const FILTER_OPT = {
   GET_GENRES: "genre/movie/list",
   GET_KEYWORDS: "search/keyword",
 };
+
+export const FAVORITE = {
+  GET: "account",
+};

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import Favorite from "./pages/Account/Favorite";
 import Filter from "./pages/Filter";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -7,7 +8,6 @@ import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
 import Casts from "./shared/components/MovieDetail/Casts";
 import PageLayout from "./shared/layout/PageLayout";
-import Favorite from "./pages/Account/Favorite";
 
 const App = () => {
   return (

@@ -1,10 +1,14 @@
+import heartIcon from "@/assets/imgs/heart.svg";
 import moreIcon from "@/assets/imgs/more.svg";
+import { useAppDispatch } from "@/redux/app/store";
+import { addFavorite } from "@/redux/features/favoriteSlice";
 import OutsideWrapper from "@/shared/components/OutsideWrapper";
 import { IMovie } from "@/shared/models/movie";
 import moment from "moment";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CircularBar from "../../CircularBar";
+import { getImageUrl } from "@/shared/utils/getImageUrl";
 
 const CarouselCard = ({
   movie,
@@ -14,6 +18,27 @@ const CarouselCard = ({
   bgBlur?: boolean;
 }) => {
   const [isMoreOptionsVisible, setMoreOptionsVisibility] = useState(false);
+  const [isAddedFavorite, setIsAddedFavorite] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleFavoriteClick = () => {
+    const newFavoriteState = !isAddedFavorite;
+    setIsAddedFavorite(newFavoriteState);
+
+    if (movie.id) {
+      dispatch(
+        addFavorite({
+          media_type: movie.media_type,
+          media_id: movie.id,
+          favorite: newFavoriteState,
+        })
+      );
+    }
+  };
+
+  const svgFilter = isAddedFavorite
+    ? "invert(20%) sepia(100%) saturate(7493%) hue-rotate(-4deg) brightness(106%) contrast(105%)"
+    : "invert(0%) sepia(98%) saturate(2%) hue-rotate(180deg) brightness(93%) contrast(101%)";
 
   return (
     <OutsideWrapper setDropdownVisibility={setMoreOptionsVisibility}>
@@ -23,7 +48,7 @@ const CarouselCard = ({
           className="w-full h-[225px] rounded-md inline-block"
         >
           <img
-            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+            src={getImageUrl(movie.backdrop_path)}
             alt=""
             className="w-full h-full object-cover rounded-lg"
           />
@@ -45,7 +70,16 @@ const CarouselCard = ({
             <button className="text-slate-600 outline-none hover:text-white py-2 hover:bg-dark_blue duration-200 ease-in-out border-b border-b-slate-400">
               Add to list
             </button>
-            <button className="text-slate-600 outline-none hover:text-white py-2 hover:bg-dark_blue duration-200 ease-in-out border-b border-b-slate-400">
+            <button
+              className="text-slate-600 outline-none hover:text-white py-2 hover:bg-dark_blue duration-200 ease-in-out border-b border-b-slate-400 flex items-center justify-center gap-2"
+              onClick={handleFavoriteClick}
+            >
+              <img
+                src={heartIcon}
+                alt="add to favorite"
+                className="w-[18px] h-[18px]"
+                style={{ filter: svgFilter }}
+              />
               Favorite
             </button>
             <button className="text-slate-600 outline-none hover:text-white py-2 hover:bg-dark_blue duration-200 ease-in-out border-b border-b-slate-400">

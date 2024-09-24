@@ -1,5 +1,5 @@
 import addIcon from "@/assets/imgs/add-list.svg";
-import heartIcon from "@/assets/imgs/heart.svg";
+import heartIcon from "@/assets/imgs/whiteheart.svg";
 import info from "@/assets/imgs/info.svg";
 import playIcon from "@/assets/imgs/play.svg";
 import saveIcon from "@/assets/imgs/save.svg";
