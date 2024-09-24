@@ -1,7 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.length) {
+      navigate(`/search?query=${searchQuery}`);
+    }
+  };
 
   return (
     <section className="min-h-[320px] h-max flex justify-center bg-white">
@@ -17,7 +27,10 @@ const Hero = () => {
           </div>
 
           <div className="bg-red-200 w-full rounded-full">
-            <form className="bg-white w-full flex items-center rounded-full relative">
+            <form
+              className="bg-white w-full flex items-center rounded-full relative"
+              onSubmit={handleSearch}
+            >
               <input
                 type="text"
                 name="searchQuery"
@@ -35,7 +48,10 @@ const Hero = () => {
                 </span>
                 <span className="xl:hidden inline-block">Search...</span>
               </div>
-              <button className="xl:w-1/12 md:w-2/12 sm:w-3/12 w-4/12 text-white font-bold rounded-full absolute right-0 h-full bg-gradient-to-r from-teal-400 to-sky-400">
+              <button
+                className="xl:w-1/12 md:w-2/12 sm:w-3/12 w-4/12 text-white font-bold rounded-full absolute right-0 h-full bg-gradient-to-r from-teal-400 to-sky-400"
+                type="submit"
+              >
                 Search
               </button>
             </form>

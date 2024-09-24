@@ -51,24 +51,31 @@ export const getFavorites = createAsyncThunk(
 
 export const addFavorite = createAsyncThunk(
   "favorite/addFavorite",
-  async ({
-    media_type,
-    media_id,
-    favorite,
-  }: {
-    media_type: string;
-    media_id: number;
-    favorite: boolean;
-  }) => {
-    const res = await instance.post<IFavoriteAddResponse>(
-      `${FAVORITE.GET}/21518606/favorite`,
-      {
-        media_type: media_type,
-        media_id: media_id,
-        favorite: favorite,
-      }
-    );
-    return res.data;
+  async (
+    {
+      media_type,
+      media_id,
+      favorite,
+    }: {
+      media_type: string;
+      media_id: number;
+      favorite: boolean;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await instance.post<IFavoriteAddResponse>(
+        `${FAVORITE.GET}/21518606/favorite`,
+        {
+          media_type: media_type,
+          media_id: media_id,
+          favorite: favorite,
+        }
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   }
 );
 
@@ -90,7 +97,7 @@ const favoriteSlice = createSlice({
     });
 
     builder.addCase(addFavorite.fulfilled, (state, action) => {
-      state.success = action.payload.success;
+      state.success = true;
       state.status_message = action.payload.status_message;
       state.loading = "succeeded";
     });

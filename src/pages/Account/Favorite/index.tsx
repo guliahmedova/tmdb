@@ -1,6 +1,7 @@
 import arrow from "@/assets/imgs/down-arrow-sort.svg";
 import { RootState, useAppDispatch } from "@/redux/app/store";
 import { addFavorite, getFavorites } from "@/redux/features/favoriteSlice";
+import { formatOverview } from "@/shared/utils/formatText";
 import { getImageUrl } from "@/shared/utils/getImageUrl";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -35,12 +36,6 @@ const Favorite = () => {
 
   const handleOrderChange = () => {
     setSortBy((prevSort) => (prevSort === SORT.asc ? SORT.desc : SORT.asc));
-  };
-
-  const formatOverview = (overview: string) => {
-    const words = overview.split(" ");
-    const truncated = words.slice(0, 20).join(" ");
-    return truncated;
   };
 
   return (

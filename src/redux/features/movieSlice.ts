@@ -217,7 +217,7 @@ export const getFilteredMovies = createAsyncThunk(
       params.with_watch_providers = with_watch_providers;
     }
     if (language) {
-      params.language = language;
+      params.language = language; // ?? menasi ne idi bunun yadima sal!
     }
     if (watch_region) {
       params.watch_region = watch_region;

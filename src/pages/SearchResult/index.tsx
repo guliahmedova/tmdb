@@ -1,13 +1,32 @@
-import c from "@/assets/imgs/m1.jpg";
+import { RootState, useAppDispatch } from "@/redux/app/store";
+import { searchMovies } from "@/redux/features/searchSlice";
 import SearchBar from "@/shared/components/SearchBar";
-import { Link } from "react-router-dom";
+import { formatOverview } from "@/shared/utils/formatText";
+import { getImageUrl } from "@/shared/utils/getImageUrl";
+import moment from "moment";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 
 const SearchResult = () => {
+  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query");
+  const { movies } = useSelector((state: RootState) => state.search);
+
+  useEffect(() => {
+    if (query) {
+      dispatch(searchMovies({ searchQuery: query }));
+    }
+  }, [query]);
+
+  console.log(movies);
+
   return (
-    <div className="w-full h-full flex justify-center">
+    <div className="w-full h-full flex justify-center bg-white">
       <SearchBar />
       <div className="max-w-7xl w-full h-full px-10 lg:my-16 my-12">
-        <div className="flex gap-5 lg:flex-row flex-col">
+        <div className="flex gap-5 lg:flex-row flex-col flex-wrap">
           {/* ----- left side--------- */}
           <div className="lg:w-3/12 w-full">
             <div className="font-semibold text-white bg-[#01B4E4] rounded-tr-md rounded-tl-md py-4 px-4 w-full mb-2 cursor-default">
@@ -61,32 +80,33 @@ const SearchResult = () => {
           </div>
           {/* ------left side-------- */}
 
-          <div className="lg:w-9/12 w-full">
-            <div className="bg-white rounded-md shadow-md flex gap-x-4 min-h-36">
-              <Link to="#" className="lg:w-auto w-4/12">
+          <div className="lg:w-8/12 w-full">
+            {movies?.map((movie) => (
+              <Link
+                to={`/movie/${movie.id}`}
+                className="flex bg-white rounded-lg shadow-md p-4 w-full mb-2"
+                key={movie.id}
+              >
                 <img
-                  src={c}
-                  alt=""
-                  className="object-cover rounded-tl-md rounded-bl-md w-full h-full"
+                  src={getImageUrl(movie.backdrop_path)}
+                  alt="Monsters"
+                  className="w-24 h-36 object-cover rounded-md"
                 />
-              </Link>
-              <div className="py-4 flex flex-col justify-between px-2">
-                <div>
-                  <Link
-                    to="#"
-                    className="font-semibold text-lg hover:text-gray-500"
-                  >
-                    Mother
-                  </Link>
-                  <span className="block text-gray-500">April 14, 2010</span>
+
+                <div className="ml-4">
+                  <h2 className="text-lg hover:text-gray-500 font-bold text-gray-600">
+                    {movie.title}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    {moment(movie.release_date).format("LL")}
+                  </p>
+
+                  <p className="mt-2 text-gray-700">
+                    {formatOverview(movie.overview)}...
+                  </p>
                 </div>
-                <p className="text-gray-600 mt-3 mb-0 text-ellipsis">
-                  Yasuko Matsuyuki plays the part of Nao Suzuhara, an elementary
-                  school teacher. When she realizes that one of the female
-                  students is receiving abuse from her mother, Nao's maternal
-                </p>
-              </div>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

@@ -5,8 +5,7 @@ export const MOVIE = {
 };
 
 export const SEARCH = {
-  MOVIE:
-    "search/movie?query=monsters&include_adult=false&language=en-US&page=1",
+  MOVIE: "search/movie",
 };
 
 export const FILTER_OPT = {
