@@ -27,7 +27,9 @@ const Filter = () => {
   const [filterOpts, setFilterOpts] = useState({
     sortBy: "popularity.desc",
     whereToRegion: "AD",
+    language: "",
     whereToProvider: "",
+    with_genres: "",
   });
   const [pageTitle, setPageTitle] = useState("Popular");
   const dispatch = useAppDispatch();
@@ -80,6 +82,8 @@ const Filter = () => {
         sort_by: filterOpts.sortBy,
         watch_region: filterOpts.whereToRegion,
         with_watch_providers: filterOpts.whereToProvider,
+        language: filterOpts.language,
+        with_genres: filterOpts.with_genres,
       })
     );
   };
@@ -97,7 +101,7 @@ const Filter = () => {
               setFilterOpts={updateFilterOpts}
               region={filterOpts.whereToRegion}
             />
-            <Filters />
+            <Filters setFilterOpts={updateFilterOpts} />
             <button
               className="bg-sky-400 rounded-full disabled:bg-gray-200 disabled:text-gray-400 w-full py-3 hover:bg-dark_blue text-lg font-semibold text-white"
               disabled={isSearchBtnDisabled}

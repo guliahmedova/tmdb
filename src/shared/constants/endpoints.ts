@@ -13,4 +13,6 @@ export const FILTER_OPT = {
   GET_REGIONS: "watch/providers/regions",
   GET_MOVIE_PROVIDERS: "watch/providers/movie",
   GET_LANGS: "configuration/languages",
+  GET_GENRES: "genre/movie/list",
+  GET_KEYWORDS: "search/keyword",
 };

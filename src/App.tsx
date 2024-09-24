@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import SearchResult from "./pages/SearchResult";
 import Casts from "./shared/components/MovieDetail/Casts";
 import PageLayout from "./shared/layout/PageLayout";
+import Favorite from "./pages/Account/Favorite";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/filter/:path" element={<Filter />} />
         <Route path="/:id/cast" element={<Casts />} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path="/favorite" element={<Favorite />} />
         <Route path="/login" element={<Login />} />
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -199,24 +199,31 @@ export const getFilteredMovies = createAsyncThunk(
     sort_by = "popularity.desc",
     watch_region,
     with_watch_providers,
+    with_genres,
   }: {
     page?: number;
     language?: string;
     sort_by?: string;
     watch_region?: string;
     with_watch_providers?: string;
+    with_genres: string;
   }) => {
     const params: { [key: string]: any } = {
-      language,
       page,
       sort_by,
-      watch_region,
     };
-
-    console.log(with_watch_providers);
 
     if (with_watch_providers) {
       params.with_watch_providers = with_watch_providers;
+    }
+    if (language) {
+      params.language = language;
+    }
+    if (watch_region) {
+      params.watch_region = watch_region;
+    }
+    if (with_genres) {
+      params.with_genres = with_genres;
     }
 
     const res = await instance.get<IMovieResponse>(`${MOVIE.FILTER_MOVIE}`, {

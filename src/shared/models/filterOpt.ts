@@ -1,7 +1,7 @@
-export interface ICountry {
-  iso_3166_1: string;
+export interface ILanguage {
+  iso_639_1: string;
   english_name: string;
-  native_name: string;
+  name: string;
 }
 
 export interface IRegion {
@@ -166,4 +166,21 @@ export interface IDisplayPriorities {
   CD?: number;
   XK?: number;
   VA?: number;
+}
+
+export interface IGenre {
+  id: number;
+  name: string;
+}
+
+export interface IKeywordReponse {
+  page: number;
+  results: IKeyword[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IKeyword {
+  id: number;
+  name: string;
 }

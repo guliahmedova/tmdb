@@ -21,7 +21,6 @@ const ToWatch = ({ setFilterOpts, region }: IToWatch) => {
   );
 
   const toggleBox = (key: number) => {
-    setFilterOpts("whereToProvider", checkedOpts?.join("|"));
     setCheckedOpts((prevState) =>
       prevState.includes(key)
         ? prevState?.filter((optKey) => optKey !== key)
@@ -60,7 +59,7 @@ const ToWatch = ({ setFilterOpts, region }: IToWatch) => {
             </p>
             <label
               htmlFor="towatch"
-              className="flex items-baseline mt-3 gap-2 cursor-pointer"
+              className="flex items-baseline mt-2 gap-2 cursor-pointer"
             >
               <input type="checkbox" id="towatch" className="accent-sky-400" />
               <span className="w-44">
