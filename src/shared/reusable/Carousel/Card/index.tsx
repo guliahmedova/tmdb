@@ -32,7 +32,6 @@ const CarouselCard = ({
         <div
           className="absolute top-4 right-4"
           onClick={() => {
-            console.log("salam");
             setMoreOptionsVisibility(true);
           }}
         >

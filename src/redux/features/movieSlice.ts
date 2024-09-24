@@ -190,6 +190,43 @@ export const getMovieRecommendationsById = createAsyncThunk(
   }
 );
 
+//const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=AD&with_watch_providers=232%7C445%7C638';
+export const getFilteredMovies = createAsyncThunk(
+  "movie/getFilteredMovies",
+  async ({
+    page = 1,
+    language = "en-US",
+    sort_by = "popularity.desc",
+    watch_region,
+    with_watch_providers,
+  }: {
+    page?: number;
+    language?: string;
+    sort_by?: string;
+    watch_region?: string;
+    with_watch_providers?: string;
+  }) => {
+    const params: { [key: string]: any } = {
+      language,
+      page,
+      sort_by,
+      watch_region,
+    };
+
+    console.log(with_watch_providers);
+
+    if (with_watch_providers) {
+      params.with_watch_providers = with_watch_providers;
+    }
+
+    const res = await instance.get<IMovieResponse>(`${MOVIE.FILTER_MOVIE}`, {
+      params,
+    });
+
+    return res.data;
+  }
+);
+
 const movieSlice = createSlice({
   name: "movie",
   initialState,
@@ -288,6 +325,18 @@ const movieSlice = createSlice({
       state.loading = "pending";
     });
     builder.addCase(getMovieVideosById.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error.message || "Failed to fetch trending movies";
+    });
+
+    builder.addCase(getFilteredMovies.fulfilled, (state, action) => {
+      state.movies = action.payload.results;
+      state.loading = "succeeded";
+    });
+    builder.addCase(getFilteredMovies.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(getFilteredMovies.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.error.message || "Failed to fetch trending movies";
     });

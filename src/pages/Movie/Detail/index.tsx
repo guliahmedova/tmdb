@@ -30,9 +30,7 @@ const MovieDetail = () => {
   >("review");
   const [isImageExpand, setImageExpend] = useState(false);
   const [isTrailerPopupVisible, setTrailerPopupVisibility] = useState(false);
-  const { id, title } = useParams();
-
-  console.log(id, title);
+  const { id } = useParams();
 
   const dispatch = useAppDispatch();
 

@@ -10,7 +10,7 @@ const options = [
 ];
 
 const Filters = () => {
-  const [isBodyVisible, setBodyVisibility] = useState(true);
+  const [isBodyVisible, setBodyVisibility] = useState(false);
   const [isAvailabilitieVisible, setAvailabilitiesVisibility] = useState(false);
   const [genres, setGenres] = useState<string[]>([]);
 

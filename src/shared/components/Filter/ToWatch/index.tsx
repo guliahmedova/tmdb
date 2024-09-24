@@ -1,21 +1,27 @@
-import { useState } from "react";
-import FilterHeader from "../FilterHeader";
-import editIcon from "@/assets/imgs/edit.svg";
-import netflixIcon from "@/assets/imgs/netflix-icon.svg";
 import doneIcon from "@/assets/imgs/done-round.svg";
-import Select from "react-select";
+import editIcon from "@/assets/imgs/edit.svg";
+import { RootState, useAppDispatch } from "@/redux/app/store";
+import { getMovieProviders, getRegions } from "@/redux/features/filterOptSlice";
+import { getImageUrl } from "@/shared/utils/getImageUrl";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import FilterHeader from "../FilterHeader";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+interface IToWatch {
+  setFilterOpts: (optName: string, optValue: string) => void;
+  region: string;
+}
 
-const ToWatch = () => {
+const ToWatch = ({ setFilterOpts, region }: IToWatch) => {
   const [isBodyVisible, setBodyVisibility] = useState(false);
-  const [checkedOpts, setCheckedOpts] = useState<string[]>([]);
+  const [checkedOpts, setCheckedOpts] = useState<number[]>([]);
+  const dispatch = useAppDispatch();
+  const { regions, movieProviders } = useSelector(
+    (state: RootState) => state.filterOpt
+  );
 
-  const toggleBox = (key: string) => {
+  const toggleBox = (key: number) => {
+    setFilterOpts("whereToProvider", checkedOpts?.join("|"));
     setCheckedOpts((prevState) =>
       prevState.includes(key)
         ? prevState?.filter((optKey) => optKey !== key)
@@ -23,11 +29,25 @@ const ToWatch = () => {
     );
   };
 
+  useEffect(() => {
+    if (checkedOpts.length > 0) {
+      setFilterOpts("whereToProvider", checkedOpts.join("|"));
+    }
+  }, [checkedOpts]);
+
+  useEffect(() => {
+    dispatch(getRegions());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getMovieProviders({ watch_region: region }));
+  }, [region]);
+
   return (
     <div className="rounded-lg shadow-lg border w-full my-4">
       <FilterHeader
         title="Where To Watch"
-        count={6}
+        count={movieProviders?.length}
         isBodyVisible={isBodyVisible}
         setState={setBodyVisibility}
       />
@@ -52,42 +72,40 @@ const ToWatch = () => {
             <p className="text-gray-500 flex items-center gap-2 mb-4">
               Country
             </p>
-            <Select
-              className="bg-slate-200"
-              defaultValue={options[0]}
-              options={options}
-            />
-            <ul className="mt-4 flex gap-2 items-center">
-              <li
-                className="size-12 relative cursor-pointer"
-                onClick={() => toggleBox("netflix")}
+            <form className="max-w-sm mx-auto">
+              <select
+                defaultValue={regions?.[0].english_name}
+                id="countries"
+                className="bg-slate-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => setFilterOpts("whereToRegion", e.target.value)}
               >
-                <img
-                  src={netflixIcon}
-                  alt="netflix icon"
-                  className="size-full rounded-lg"
-                />
-                {checkedOpts.includes("netflix") && (
-                  <div className="bg-[#00A2CD] absolute inset-0 rounded-lg">
-                    <img src={doneIcon} alt="done" />
-                  </div>
-                )}
-              </li>
-              <li
-                className="size-12 relative cursor-pointer"
-                onClick={() => toggleBox("google")}
-              >
-                <img
-                  src={netflixIcon}
-                  alt="netflix icon"
-                  className="size-full rounded-lg"
-                />
-                {checkedOpts.includes("google") && (
-                  <div className="bg-[#00A2CD] absolute inset-0 rounded-lg">
-                    <img src={doneIcon} alt="done" />
-                  </div>
-                )}
-              </li>
+                {regions?.map((region) => (
+                  <option value={region.iso_3166_1} key={region.iso_3166_1}>
+                    {region.native_name}
+                  </option>
+                ))}
+              </select>
+            </form>
+
+            <ul className="mt-4 grid grid-cols-4 gap-2 items-center flex-wrap">
+              {movieProviders?.map((provider) => (
+                <li
+                  key={provider.provider_id}
+                  className="w-full h-full relative cursor-pointer"
+                  onClick={() => toggleBox(provider.provider_id)}
+                >
+                  <img
+                    src={getImageUrl(provider.logo_path)}
+                    alt={provider.provider_name}
+                    className="size-full rounded-lg"
+                  />
+                  {checkedOpts.includes(provider.provider_id) && (
+                    <div className="bg-[#00A2CD] absolute inset-0 rounded-lg">
+                      <img src={doneIcon} alt="done" />
+                    </div>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
