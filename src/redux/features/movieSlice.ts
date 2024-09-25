@@ -190,11 +190,10 @@ export const getMovieRecommendationsById = createAsyncThunk(
   }
 );
 
-// user score
-//vote_average.gte	"2"
+//user score
+// vote_average.gte	"2"
 // vote_average.lte	"7"
-//Minimum User Votes
-// vote_count.gte	"500"
+
 export const getFilteredMovies = createAsyncThunk(
   "movie/getFilteredMovies",
   async ({
@@ -207,6 +206,8 @@ export const getFilteredMovies = createAsyncThunk(
     from,
     to,
     vote_count,
+    vote_averageMin,
+    vote_averageMax,
   }: {
     page?: number;
     language?: string;
@@ -217,6 +218,8 @@ export const getFilteredMovies = createAsyncThunk(
     from: string;
     to: string;
     vote_count: string;
+    vote_averageMin: string;
+    vote_averageMax: string;
   }) => {
     const params: { [key: string]: any } = {
       page,
@@ -243,6 +246,12 @@ export const getFilteredMovies = createAsyncThunk(
     }
     if (vote_count) {
       params["vote_count.gte"] = vote_count;
+    }
+    if (vote_averageMax) {
+      params["vote_average.lte"] = vote_averageMax;
+    }
+    if (vote_averageMin) {
+      params["vote_average.gte"] = vote_averageMin;
     }
 
     const res = await instance.get<IMovieResponse>(`${MOVIE.FILTER_MOVIE}`, {

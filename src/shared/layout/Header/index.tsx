@@ -106,7 +106,10 @@ const Header = () => {
         {isSearcBarVisible && <SearchBar />}
       </header>
 
-      <SidebarMobile isSidebarVisible={isSidebarVisible} />
+      <SidebarMobile
+        isSidebarVisible={isSidebarVisible}
+        setSidebarVisibility={setSidebarVisibility}
+      />
     </>
   );
 };

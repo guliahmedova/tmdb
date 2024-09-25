@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import OutsideWrapper from "../../OutsideWrapper";
 import FilterHeader from "../FilterHeader";
-import MultiThumbRange from "../MultiThumbRange";
 import RangeSlider from "../RangeSlider";
 
 interface IFilters {
@@ -307,7 +306,12 @@ const Filters = ({ setFilterOpts }: IFilters) => {
 
           <div className="p-4 border-t">
             <p className="text-gray-500 mb-4">User Score</p>
-            <MultiThumbRange start={0} end={10} step={1} />
+            <RangeSlider
+              start={0}
+              end={10}
+              step={1}
+              setFilterOpts={setFilterOpts}
+            />
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500 mb-4">Minimum User Votes</p>
@@ -320,7 +324,18 @@ const Filters = ({ setFilterOpts }: IFilters) => {
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500 mb-2">Runtime</p>
-            <MultiThumbRange start={0} end={360} step={15} />
+            {/* <MultiThumbRange
+              setFilterOpts={setFilterOpts}
+              start={0}
+              end={360}
+              step={15}
+            /> */}
+            <RangeSlider
+              setFilterOpts={setFilterOpts}
+              start={0}
+              end={360}
+              step={15}
+            />
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500">Keywords</p>

@@ -33,6 +33,8 @@ const Filter = () => {
     from: "",
     to: "",
     vote_count: "",
+    vote_averageMax: "",
+    vote_averageMin: "",
   });
   const [pageTitle, setPageTitle] = useState("Popular");
   const dispatch = useAppDispatch();
@@ -90,6 +92,8 @@ const Filter = () => {
         from: filterOpts.from,
         to: filterOpts.to,
         vote_count: filterOpts.vote_count,
+        vote_averageMax: filterOpts.vote_averageMax,
+        vote_averageMin: filterOpts.vote_averageMin,
       })
     );
   };
