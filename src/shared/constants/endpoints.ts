@@ -12,6 +12,7 @@ export const SEARCH = {
   KEYWORD: "keyword",
   COLLECTION: "collection",
   COMPANY: "company",
+  MULTI: "multi",
 };
 
 export const FILTER_OPT = {

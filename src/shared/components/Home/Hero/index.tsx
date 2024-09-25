@@ -9,7 +9,7 @@ const Hero = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.length) {
-      navigate(`/search?query=${searchQuery}`);
+      navigate(`/search/tv?query=${searchQuery}`);
     }
   };
 

@@ -2,6 +2,7 @@ import { RootState, useAppDispatch } from "@/redux/app/store";
 import { searchMovies } from "@/redux/features/searchSlice";
 import SearchBar from "@/shared/components/SearchBar";
 import { SEARCH } from "@/shared/constants/endpoints";
+import Spinner from "@/shared/reusable/Spinner";
 import { formatOverview } from "@/shared/utils/formatText";
 import { getImageUrl } from "@/shared/utils/getImageUrl";
 import moment from "moment";
@@ -14,7 +15,7 @@ const SearchResult = () => {
   const [searchParams] = useSearchParams();
   const { category } = useParams<{ category: string }>();
   const query = searchParams.get("query");
-  const { movies, tvShows, collections, companies, keywords, people } =
+  const { movies, tvShows, collections, companies, keywords, people, loading } =
     useSelector((state: RootState) => state.search);
 
   useEffect(() => {
@@ -173,10 +174,9 @@ const SearchResult = () => {
 
   return (
     <div className="w-full h-full flex justify-center bg-white">
-      <SearchBar />
+      <SearchBar searchQuery={query || ""} categpry={category || ""} />
       <div className="max-w-7xl w-full h-full px-10 lg:my-16 my-12">
         <div className="flex gap-5 lg:flex-row flex-col flex-wrap">
-          {/* ----- left side--------- */}
           <div className="lg:w-3/12 w-full">
             <div className="font-semibold text-white bg-[#01B4E4] rounded-tr-md rounded-tl-md py-4 px-4 w-full mb-2 cursor-default">
               Search Results
@@ -283,9 +283,10 @@ const SearchResult = () => {
               </Link>
             </div>
           </div>
-          {/* ------left side-------- */}
 
-          <div className="lg:w-8/12 w-full">{renderSearchResults()}</div>
+          <div className="lg:w-8/12 w-full">
+            {loading === "pending" ? <Spinner /> : renderSearchResults()}
+          </div>
         </div>
       </div>
     </div>
