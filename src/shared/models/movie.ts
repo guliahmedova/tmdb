@@ -66,6 +66,13 @@ export interface ProductionCompany {
   origin_country: string;
 }
 
+export interface IProductionCompanyResponse {
+  page: number;
+  results: ProductionCompany[];
+  total_pages: number;
+  total_results: number;
+}
+
 export interface ProductionCountry {
   iso_3166_1: string;
   name: string;
@@ -242,4 +249,45 @@ export interface IMovieVideo {
   type: string;
   official: boolean;
   id: string;
+}
+
+export interface IPeopleResponse {
+  page: number;
+  results: IPerson[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IPerson {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  known_for: KnownFor[];
+}
+
+export interface KnownFor {
+  backdrop_path?: string;
+  id: number;
+  title?: string;
+  original_title?: string;
+  overview: string;
+  poster_path?: string;
+  media_type: string;
+  adult: boolean;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date?: string;
+  video?: boolean;
+  vote_average: number;
+  vote_count: number;
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
 }

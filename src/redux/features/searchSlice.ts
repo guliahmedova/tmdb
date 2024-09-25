@@ -1,7 +1,15 @@
 import { SEARCH } from "@/shared/constants/endpoints";
-import { IMovie, IMovieResponse } from "@/shared/models/movie";
+import {
+  IMovie,
+  IMovieResponse,
+  IPeopleResponse,
+  IPerson,
+  IProductionCompanyResponse,
+  ProductionCompany,
+} from "@/shared/models/movie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../app/axiosConfig";
+import { IKeyword, IKeywordReponse } from "@/shared/models/filterOpt";
 
 interface SearchState {
   loading: "idle" | "pending" | "succeeded" | "failed";
@@ -9,9 +17,9 @@ interface SearchState {
   movies: IMovie[];
   tvShows: IMovie[];
   collections: IMovie[];
-  keywords: IMovie[];
-  people: IMovie[];
-  companies: IMovie[];
+  keywords: IKeyword[];
+  people: IPerson[];
+  companies: ProductionCompany[];
 }
 
 const initialState: SearchState = {
@@ -56,19 +64,19 @@ export const searchMovies = createAsyncThunk(
           params,
         }
       );
-      const resPeople = await instance.get<IMovieResponse>(
+      const resPeople = await instance.get<IPeopleResponse>(
         `${SEARCH.GET}/${SEARCH.PEOPLE}`,
         {
           params,
         }
       );
-      const resCompany = await instance.get<IMovieResponse>(
+      const resCompany = await instance.get<IProductionCompanyResponse>(
         `${SEARCH.GET}/${SEARCH.COMPANY}`,
         {
           params,
         }
       );
-      const resKeyword = await instance.get<IMovieResponse>(
+      const resKeyword = await instance.get<IKeywordReponse>(
         `${SEARCH.GET}/${SEARCH.KEYWORD}`,
         {
           params,
