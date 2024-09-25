@@ -5,7 +5,13 @@ export const MOVIE = {
 };
 
 export const SEARCH = {
-  MOVIE: "search/movie",
+  GET: "search",
+  TV: "tv",
+  MOVIE: "movie",
+  PEOPLE: "person",
+  KEYWORD: "keyword",
+  COLLECTION: "collection",
+  COMPANY: "company",
 };
 
 export const FILTER_OPT = {

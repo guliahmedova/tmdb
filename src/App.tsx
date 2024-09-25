@@ -18,6 +18,7 @@ const App = () => {
         <Route path="/filter/:path" element={<Filter />} />
         <Route path="/:id/cast" element={<Casts />} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path="/search/:category" element={<SearchResult />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/login" element={<Login />} />
       </Route>

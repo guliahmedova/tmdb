@@ -39,8 +39,8 @@ const Hero = () => {
                 className="w-10/12 rounded-full rounded-tr-none outline-none text-slate-400 rounded-br-none py-3 px-5 whitespace-nowrap overflow-hidden text-ellipsis placeholder:t"
               />
               <div
-                className={`absolute left-4 text-slate-400 ${
-                  searchQuery ? "hidden" : "inline-block"
+                className={`absolute left-4 text-slate-400 pointer-events-none ${
+                  searchQuery.length > 0 ? "hidden" : "inline-block"
                 }`}
               >
                 <span className="xl:inline-block hidden">

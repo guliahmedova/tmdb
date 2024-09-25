@@ -77,6 +77,15 @@ export interface SpokenLanguage {
   name: string;
 }
 
+export interface ISearchResult {
+  movies: IMovie[];
+  collections: IMovie[];
+  keywords: IMovie[];
+  companies: IMovie[];
+  tvShows: IMovie[];
+  people: IMovie[];
+}
+
 export interface IMovieResponse {
   page: number;
   results: IMovie[];

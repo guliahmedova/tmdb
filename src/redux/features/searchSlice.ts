@@ -1,18 +1,28 @@
+import { SEARCH } from "@/shared/constants/endpoints";
 import { IMovie, IMovieResponse } from "@/shared/models/movie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../app/axiosConfig";
-import { SEARCH } from "@/shared/constants/endpoints";
 
 interface SearchState {
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
   movies: IMovie[];
+  tvShows: IMovie[];
+  collections: IMovie[];
+  keywords: IMovie[];
+  people: IMovie[];
+  companies: IMovie[];
 }
 
 const initialState: SearchState = {
   loading: "idle",
   error: null,
   movies: [],
+  tvShows: [],
+  collections: [],
+  keywords: [],
+  people: [],
+  companies: [],
 };
 
 export const searchMovies = createAsyncThunk(
@@ -21,19 +31,66 @@ export const searchMovies = createAsyncThunk(
     {
       searchQuery,
       language = "en-US",
-      page = 1,
-    }: { searchQuery: string; language?: string; page?: number },
+    }: {
+      searchQuery: string;
+      language?: string;
+    },
     { rejectWithValue }
   ) => {
     try {
-      const params: { [key: string]: any } = { language, page };
+      const params: { [key: string]: any } = { language };
 
       if (searchQuery) {
         params.query = searchQuery;
       }
 
-      const res = await instance.get<IMovieResponse>(SEARCH.MOVIE, { params });
-      return res.data;
+      const resTvShow = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.TV}`,
+        {
+          params,
+        }
+      );
+      const resMovie = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.MOVIE}`,
+        {
+          params,
+        }
+      );
+      const resPeople = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.PEOPLE}`,
+        {
+          params,
+        }
+      );
+      const resCompany = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.COMPANY}`,
+        {
+          params,
+        }
+      );
+      const resKeyword = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.KEYWORD}`,
+        {
+          params,
+        }
+      );
+      const resCollection = await instance.get<IMovieResponse>(
+        `${SEARCH.GET}/${SEARCH.COLLECTION}`,
+        {
+          params,
+        }
+      );
+
+      const searchResult = {
+        movieData: resMovie.data,
+        tvShowData: resTvShow.data,
+        collectionData: resCollection.data,
+        companyData: resCompany.data,
+        peopleData: resPeople.data,
+        keywordData: resKeyword.data,
+      };
+
+      return searchResult;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -46,7 +103,12 @@ const searchSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(searchMovies.fulfilled, (state, action) => {
-      state.movies = action.payload.results;
+      state.movies = action.payload.movieData.results;
+      state.tvShows = action.payload.tvShowData.results;
+      state.collections = action.payload.collectionData.results;
+      state.people = action.payload.peopleData.results;
+      state.keywords = action.payload.keywordData.results;
+      state.companies = action.payload.companyData.results;
       state.loading = "succeeded";
     });
     builder.addCase(searchMovies.pending, (state) => {
