@@ -30,6 +30,9 @@ const Filter = () => {
     language: "",
     whereToProvider: "",
     with_genres: "",
+    from: "",
+    to: "",
+    vote_count: "",
   });
   const [pageTitle, setPageTitle] = useState("Popular");
   const dispatch = useAppDispatch();
@@ -84,6 +87,9 @@ const Filter = () => {
         with_watch_providers: filterOpts.whereToProvider,
         language: filterOpts.language,
         with_genres: filterOpts.with_genres,
+        from: filterOpts.from,
+        to: filterOpts.to,
+        vote_count: filterOpts.vote_count,
       })
     );
   };

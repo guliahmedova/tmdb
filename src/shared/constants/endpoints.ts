@@ -26,3 +26,7 @@ export const FILTER_OPT = {
 export const FAVORITE = {
   GET: "account",
 };
+
+export const PEOPLE = {
+  GET: "person",
+};

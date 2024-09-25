@@ -49,7 +49,7 @@ const CarouselCard = ({
   return (
     <>
       <OutsideWrapper setDropdownVisibility={setMoreOptionsVisibility}>
-        <div className="ml-5 w-[150px] h-full relative shadow">
+        <div className="ml-5 w-[150px] max-h-[353px] h-full relative shadow">
           <Link
             to={`/movie/${movie.id}`}
             className="w-full h-[225px] rounded-md inline-block"
@@ -98,16 +98,16 @@ const CarouselCard = ({
             </div>
           )}
 
-          <div className=" relative">
+          <div className="relative">
             <CircularBar percentage={movie.vote_average * 10} />
-            <div className="pt-6 px-3">
+            <div className="pt-6 px-3 flex flex-col justify-between h-full">
               <Link
                 to={`/movie/${movie.id}`}
                 className="text-dark_blue font-bold mb-1 block hover:text-sky-400 duration-200 ease-in-out leading-4"
               >
                 {movie.original_title || movie.original_name}
               </Link>
-              <span className="text-slate-600">
+              <span className="text-slate-600 text-sm inline-block pb-1">
                 {moment(movie.first_air_date || movie.release_date).format(
                   "ll"
                 )}

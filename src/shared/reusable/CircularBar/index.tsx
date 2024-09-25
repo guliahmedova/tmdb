@@ -93,7 +93,7 @@ const CircularProgress = ({
       <div
         className="font-semibold absolute text-white"
         style={{
-          fontSize: `${fontSize}px`,
+          fontSize: `${fontSize}px)`,
         }}
       >
         {percentage ? (

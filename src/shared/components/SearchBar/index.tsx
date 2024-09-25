@@ -14,6 +14,7 @@ const SearchBar = ({
   categpry?: string | null;
 }) => {
   const [searchInput, setSearchInput] = useState<string>(searchQuery || "");
+  const [userHasTyped, setUserHasTyped] = useState(false);
   const navigate = useNavigate();
   const movies = useSelector((state: RootState) => state.search.multiMovies);
   const dispatch = useAppDispatch();
@@ -28,11 +29,20 @@ const SearchBar = ({
   };
 
   useEffect(() => {
-    if (searchInput) {
+    if (userHasTyped && searchInput) {
       setSearchBarVisibility(true);
       dispatch(searchMulti({ searchQuery: searchInput }));
+    } else {
+      setSearchBarVisibility(false);
     }
-  }, [searchInput]);
+  }, [searchInput, userHasTyped]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+    if (!userHasTyped) {
+      setUserHasTyped(true);
+    }
+  };
 
   return (
     <div className="bg-white w-full absolute top-16 border-b flex flex-col justify-center items-center z-20">
@@ -43,7 +53,7 @@ const SearchBar = ({
         <form className="w-full h-full bg-green-800" onSubmit={handleSearch}>
           <input
             name="searchInput"
-            onChange={(e) => setSearchInput(e.target.value)}
+            onChange={handleInputChange}
             value={searchInput}
             className="w-full h-full outline-none px-4 text-slate-500 md:text-base text-xs  "
             type="search"

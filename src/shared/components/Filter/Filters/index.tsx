@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import OutsideWrapper from "../../OutsideWrapper";
 import FilterHeader from "../FilterHeader";
+import MultiThumbRange from "../MultiThumbRange";
 import RangeSlider from "../RangeSlider";
 
 interface IFilters {
@@ -15,7 +16,7 @@ interface IFilters {
 }
 
 const Filters = ({ setFilterOpts }: IFilters) => {
-  const [isBodyVisible, setBodyVisibility] = useState(false);
+  const [isBodyVisible, setBodyVisibility] = useState(true);
   const [isAvailabilitieVisible, setAvailabilitiesVisibility] = useState(false);
   const [toggleLangBtn, setToggleLangBtn] = useState(false);
   const [selectedLang, setSelectedLang] = useState("");
@@ -169,11 +170,21 @@ const Filters = ({ setFilterOpts }: IFilters) => {
             <div className="mt-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-gray-500 text-xs">from</span>
-                <input type="date" className="border rounded-lg p-2" />
+                <input
+                  type="date"
+                  name="from"
+                  className="border rounded-lg p-2"
+                  onChange={(e) => setFilterOpts("from", e.target.value)}
+                />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-500 text-xs">to</span>
-                <input type="date" className="border rounded-lg p-2" />
+                <input
+                  name="to"
+                  type="date"
+                  className="border rounded-lg p-2"
+                  onChange={(e) => setFilterOpts("to", e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -295,15 +306,21 @@ const Filters = ({ setFilterOpts }: IFilters) => {
           </div>
 
           <div className="p-4 border-t">
-            <p className="text-gray-500 mb-2">User Score</p>
-            <RangeSlider />
+            <p className="text-gray-500 mb-4">User Score</p>
+            <MultiThumbRange start={0} end={10} step={1} />
           </div>
           <div className="p-4 border-t">
-            <p className="text-gray-500 mb-2">Minimum User Votes</p>
+            <p className="text-gray-500 mb-4">Minimum User Votes</p>
+            <RangeSlider
+              start={0}
+              end={500}
+              step={50}
+              setFilterOpts={setFilterOpts}
+            />
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500 mb-2">Runtime</p>
-            <RangeSlider />
+            <MultiThumbRange start={0} end={360} step={15} />
           </div>
           <div className="p-4 border-t">
             <p className="text-gray-500">Keywords</p>

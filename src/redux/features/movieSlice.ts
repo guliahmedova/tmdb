@@ -190,7 +190,11 @@ export const getMovieRecommendationsById = createAsyncThunk(
   }
 );
 
-//const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=AD&with_watch_providers=232%7C445%7C638';
+// user score
+//vote_average.gte	"2"
+// vote_average.lte	"7"
+//Minimum User Votes
+// vote_count.gte	"500"
 export const getFilteredMovies = createAsyncThunk(
   "movie/getFilteredMovies",
   async ({
@@ -200,6 +204,9 @@ export const getFilteredMovies = createAsyncThunk(
     watch_region,
     with_watch_providers,
     with_genres,
+    from,
+    to,
+    vote_count,
   }: {
     page?: number;
     language?: string;
@@ -207,6 +214,9 @@ export const getFilteredMovies = createAsyncThunk(
     watch_region?: string;
     with_watch_providers?: string;
     with_genres: string;
+    from: string;
+    to: string;
+    vote_count: string;
   }) => {
     const params: { [key: string]: any } = {
       page,
@@ -224,6 +234,15 @@ export const getFilteredMovies = createAsyncThunk(
     }
     if (with_genres) {
       params.with_genres = with_genres;
+    }
+    if (from) {
+      params["release_date.gte"] = from;
+    }
+    if (to) {
+      params["release_date.lte"] = to;
+    }
+    if (vote_count) {
+      params["vote_count.gte"] = vote_count;
     }
 
     const res = await instance.get<IMovieResponse>(`${MOVIE.FILTER_MOVIE}`, {

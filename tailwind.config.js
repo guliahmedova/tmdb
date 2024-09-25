@@ -11,7 +11,7 @@ export default {
       },
       backgroundImage: {
         "home_hero": "url('./assets/imgs/hero_bg.webp')",
-        "trending": "url('./assets/imgs/trending_bg.svg')"
+        "trending": "url('./assets/imgs/trending_bg.svg')",
       }
     },
   },

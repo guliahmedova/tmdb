@@ -26,8 +26,6 @@ const Favorite = () => {
     dispatch(getFavorites({ favoriteType: favoriteType, sort_by: sortBy }));
   }, [favoriteType, sortBy, isDelete]);
 
-  console.log(favoriteType);
-
   const toggleDropdown = (id: number) => {
     setDropdownVisibility((prev) => ({
       [id]: !prev[id],
