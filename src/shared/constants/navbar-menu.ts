@@ -27,32 +27,32 @@ export const dropdownMenu = [
       },
     ],
   },
-  {
-    id: uuid(),
-    title: "TV Shows",
-    menu: [
-      {
-        id: uuid(),
-        subtitle: "Popular",
-        to: "/filter/tv",
-      },
-      {
-        id: uuid(),
-        subtitle: "Airing Today",
-        to: "/filter/airing_today",
-      },
-      {
-        id: uuid(),
-        subtitle: "On TV",
-        to: "/filter/on_the_air",
-      },
-      {
-        id: uuid(),
-        subtitle: "Top Rated",
-        to: "/filter/top_rated",
-      },
-    ],
-  },
+  // {
+  //   id: uuid(),
+  //   title: "TV Shows",
+  //   menu: [
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Popular",
+  //       to: "/filter/tv",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Airing Today",
+  //       to: "/filter/airing_today",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "On TV",
+  //       to: "/filter/on_the_air",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Top Rated",
+  //       to: "/filter/top_rated",
+  //     },
+  //   ],
+  // },
   {
     id: uuid(),
     title: "People",
@@ -62,32 +62,37 @@ export const dropdownMenu = [
         subtitle: "Popular People",
         to: "person",
       },
-    ],
-  },
-  {
-    id: uuid(),
-    title: "More",
-    menu: [
       {
         id: uuid(),
-        subtitle: "Discussions",
-        to: "#",
-      },
-      {
-        id: uuid(),
-        subtitle: "Leaderboard",
-        to: "#",
-      },
-      {
-        id: uuid(),
-        subtitle: "Support",
-        to: "#",
-      },
-      {
-        id: uuid(),
-        subtitle: "API",
-        to: "#",
+        subtitle: "Favorite List",
+        to: "favorite",
       },
     ],
   },
+  // {
+  //   id: uuid(),
+  //   title: "More",
+  //   menu: [
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Discussions",
+  //       to: "#",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Leaderboard",
+  //       to: "#",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "Support",
+  //       to: "#",
+  //     },
+  //     {
+  //       id: uuid(),
+  //       subtitle: "API",
+  //       to: "#",
+  //     },
+  //   ],
+  // },
 ];

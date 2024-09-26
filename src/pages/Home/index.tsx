@@ -1,7 +1,10 @@
 import { RootState, useAppDispatch } from "@/redux/app/store";
-import { getTrendingMovies } from "@/redux/features/movieSlice";
+import {
+  getFilteredMovies,
+  getTrendingMovies,
+} from "@/redux/features/movieSlice";
 import Hero from "@/shared/components/Home/Hero";
-import { trendingTabs } from "@/shared/constants/tabs";
+import { popularTabs, trendingTabs } from "@/shared/constants/tabs";
 import { IMovie } from "@/shared/models/movie";
 import Carousel from "@/shared/reusable/Carousel";
 import CarouselCard from "@/shared/reusable/Carousel/Card";
@@ -13,14 +16,23 @@ const Home = () => {
   const [activeTrendMovieTab, setActiveTrendMovieTab] = useState(
     trendingTabs[0].key
   );
+  const [activeTvShowActiveTab, setTvShowActiveTab] = useState(
+    popularTabs[0].key
+  );
+
   const trendingMovies = useSelector(
     (state: RootState) => state.movie.trendingMovies
   );
+  const popularMovies = useSelector((state: RootState) => state.movie.movies);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getTrendingMovies({ time_window: activeTrendMovieTab }));
   }, [activeTrendMovieTab]);
+
+  useEffect(() => {
+    dispatch(getFilteredMovies({ with_release_type: activeTvShowActiveTab }));
+  }, [activeTvShowActiveTab]);
 
   return (
     <>
@@ -33,12 +45,30 @@ const Home = () => {
         tabChildren={
           <SlidingTabBar
             tabs={trendingTabs}
+            layoutId="bubble1"
             activeTab={activeTrendMovieTab}
-            setActiveTab={setActiveTrendMovieTab}
+            getActiveTab={setActiveTrendMovieTab}
           />
         }
       >
         {trendingMovies?.map((movie: IMovie) => (
+          <CarouselCard key={movie.id} movie={movie} bgBlur={true} />
+        ))}
+      </Carousel>
+
+      <Carousel
+        title="What's Popular"
+        loading="succeeded"
+        tabChildren={
+          <SlidingTabBar
+            tabs={popularTabs}
+            layoutId="bubble2"
+            activeTab={activeTvShowActiveTab}
+            getActiveTab={setTvShowActiveTab}
+          />
+        }
+      >
+        {popularMovies?.map((movie: IMovie) => (
           <CarouselCard key={movie.id} movie={movie} bgBlur={true} />
         ))}
       </Carousel>

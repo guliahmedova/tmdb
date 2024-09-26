@@ -208,18 +208,20 @@ export const getFilteredMovies = createAsyncThunk(
     vote_count,
     vote_averageMin,
     vote_averageMax,
+    with_release_type,
   }: {
     page?: number;
     language?: string;
     sort_by?: string;
     watch_region?: string;
     with_watch_providers?: string;
-    with_genres: string;
-    from: string;
-    to: string;
-    vote_count: string;
-    vote_averageMin: string;
-    vote_averageMax: string;
+    with_genres?: string;
+    from?: string;
+    to?: string;
+    vote_count?: string;
+    vote_averageMin?: string;
+    vote_averageMax?: string;
+    with_release_type?: string;
   }) => {
     const params: { [key: string]: any } = {
       page,
@@ -228,6 +230,9 @@ export const getFilteredMovies = createAsyncThunk(
 
     if (with_watch_providers) {
       params.with_watch_providers = with_watch_providers;
+    }
+    if (with_release_type) {
+      params.with_release_type = with_release_type;
     }
     if (language) {
       params.language = language; // ?? menasi ne idi bunun yadima sal!

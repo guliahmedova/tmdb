@@ -33,8 +33,10 @@ const Carousel = ({
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center gap-5 pl-10">
-            <h3 className="font-semibold text-2xl text-dark_blue">{title}</h3>
+          <div className="flex items-center lg:gap-5 gap-2 lg:pl-10 px-5 flex-wrap">
+            <h3 className="font-semibold md:text-2xl text-dark_blue">
+              {title}
+            </h3>
             {tabChildren !== "undefined" && tabChildren}
           </div>
           <div className="my-5 relative">

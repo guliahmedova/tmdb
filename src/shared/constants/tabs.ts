@@ -11,19 +11,19 @@ export const trendingTabs = [
 
 export const popularTabs = [
   {
-    key: "now_playing",
+    key: "1",
     label: "Streaming",
   },
   {
-    key: "popular",
+    key: "2",
     label: "On TV",
   },
   {
-    key: "top_rated",
+    key: "3",
     label: "For Rent",
   },
   {
-    key: "upcoming",
+    key: "4",
     label: "In Theaters",
   },
 ];
