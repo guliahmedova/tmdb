@@ -105,7 +105,10 @@ const CarouselCard = ({
                 to={`/movie/${movie.id}`}
                 className="text-dark_blue font-bold mb-1 block hover:text-sky-400 duration-200 ease-in-out leading-4"
               >
-                {movie.original_title || movie.original_name}
+                {movie.title ||
+                  movie.name ||
+                  movie.original_title ||
+                  movie.original_name}
               </Link>
               <span className="text-slate-600 text-sm inline-block pb-1">
                 {moment(movie.first_air_date || movie.release_date).format(

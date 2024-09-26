@@ -20,6 +20,8 @@ const Home = () => {
     popularTabs[0].key
   );
 
+  const { lang } = useSelector((state: RootState) => state.translation);
+
   const trendingMovies = useSelector(
     (state: RootState) => state.movie.trendingMovies
   );
@@ -27,12 +29,19 @@ const Home = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getTrendingMovies({ time_window: activeTrendMovieTab }));
-  }, [activeTrendMovieTab]);
+    dispatch(
+      getTrendingMovies({ time_window: activeTrendMovieTab, language: lang })
+    );
+  }, [activeTrendMovieTab, lang]);
 
   useEffect(() => {
-    dispatch(getFilteredMovies({ with_release_type: activeTvShowActiveTab }));
-  }, [activeTvShowActiveTab]);
+    dispatch(
+      getFilteredMovies({
+        with_release_type: activeTvShowActiveTab,
+        language: lang,
+      })
+    );
+  }, [activeTvShowActiveTab, lang]);
 
   return (
     <>
@@ -59,6 +68,7 @@ const Home = () => {
       <Carousel
         title="What's Popular"
         loading="succeeded"
+        sectionTop={0}
         tabChildren={
           <SlidingTabBar
             tabs={popularTabs}

@@ -7,22 +7,22 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0;
+    width: 2px;
 }
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: lightgray;
 }
 ::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 10px;
+    background: lightgray;
+    border-radius: 20px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: transparent;
+    background: whitesmoke;
 }
 * {
-    scrollbar-width: none;
-    scrollbar-color: transparent transparent;
+    scrollbar-width: 2px;
+    scrollbar-color: rgba(128, 128, 128, 0.228) rgba(211, 211, 211, 0.361);
 }
 *::-moz-scrollbar-thumb:hover {
-    background-color: transparent;
+    background-color: lightgray;
 }

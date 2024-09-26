@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
+// import "./shared/utils/i18n";
 import { store } from "./redux/app/store.ts";
 import Loader from "./shared/reusable/Loader/index.tsx";
 

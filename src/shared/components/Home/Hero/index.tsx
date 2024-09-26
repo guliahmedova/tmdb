@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
-
   const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -18,12 +18,15 @@ const Hero = () => {
       <div className="max-w-7xl px-10 w-full bg-dark_blue bg-home_hero bg-no-repeat bg-center bg-cover">
         <div className="h-full flex flex-col items-start justify-center">
           <div className="text-white mb-5">
-            <h1 className="font-bold xl:text-5xl xl:mb-0 mb-4 text-4xl">
-              Welcome.
-            </h1>
-            <p className="xl:text-3xl text-2xl font-semibold">
-              Millions of movies, TV shows and people to discover. Explore now.
-            </p>
+            <Trans i18nKey="welcome_message">
+              <h1 className="font-bold xl:text-5xl xl:mb-0 mb-4 text-4xl">
+                Welcome.
+              </h1>
+              <p className="xl:text-3xl text-2xl font-semibold">
+                Millions of movies, TV shows and people to discover. Explore
+                now.
+              </p>
+            </Trans>
           </div>
 
           <div className="bg-red-200 w-full rounded-full">

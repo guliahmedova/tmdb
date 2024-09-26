@@ -46,7 +46,7 @@ const MovieDetail = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getMovieById({ movieId: id }));
+      dispatch(getMovieById({ movieId: id, language: "fr" }));
       dispatch(getMovieImagesById({ movieId: id }));
       dispatch(getMovieKeywordsById({ movieId: id }));
       dispatch(getMovieReviewsById({ movieId: id }));
@@ -79,153 +79,13 @@ const MovieDetail = () => {
             </div>
 
             <DetailBanner
-              title={movie.title}
+              title={movie?.title}
               genres={movie?.genres}
               overview={movie.overview}
               vote_average={movie?.vote_average}
-              movieImage={movie.backdrop_path}
+              movieImage={movie?.backdrop_path}
               images={movieImages}
             />
-
-            {/* <div
-              className="py-10 flex justify-center lg:px-0 px-10 bg-no-repeat bg-center bg-cover relative"
-              // style={{
-              //   backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieImages?.posters?.[0].file_path})`,
-              // }}
-            >
-              <div className="absolute inset-0 bg-black opacity-80"></div>
-              <div className="max-w-7xl w-full flex gap-8 md:flex-row flex-col md:px-0 px-10 relative">
-                {movie?.poster_path && (
-                  <div
-                    className="relative w-[300px] h-[450px] cursor-pointer group rounded-lg md:mx-0 mx-auto"
-                    onClick={() => setImageExpend(true)}
-                  >
-                    <img
-                      src={getImageUrl(movie?.poster_path)}
-                      alt={movie?.original_title}
-                      className="w-full h-full object-cover shadow rounded-lg"
-                    />
-                    <div className="absolute size-full backdrop-blur-lg bg-black/10 inset-0 flex-col justify-center items-center rounded-lg hidden group-hover:flex shadow">
-                      <div className="flex xl:gap-3 items-center xl:flex-row flex-col">
-                        <img
-                          src={expand}
-                          alt="expand"
-                          className="xl:size-10 size-6"
-                        />
-                        <span className="text-white font-bold">Expand</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="md:mt-4">
-                  <h2 className="md:text-4xl text-lg font-bold text-white md:text-left text-center">
-                    {movie?.original_title}
-                    <span className="font-normal text-slate-50"> (2014)</span>
-                  </h2>
-
-                  <div className="mt-2 flex items-center gap-2 justify-center md:justify-start">
-                    <span className="border border-gray-500 rounded-lg p-1 text-gray-500 xl:text-base text-xs">
-                      TV-14
-                    </span>
-                    <ul className="text-gray-50 flex items-center gap-1 xl:text-base text-xs">
-                      <li className="hover:text-gray-500">
-                        <Link to="#">Drama,</Link>
-                      </li>
-                      <li className="hover:text-gray-500">
-                        <Link to="#"> Sci-Fi & Fantasy </Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="md:my-10 my-3 flex items-center gap-4 relative md:justify-start justify-center">
-                    <CircularProgress
-                      percentage={movie?.vote_average}
-                      top={5}
-                      left={0}
-                      size={68}
-                      width={64}
-                      height={64}
-                      percentageFontSize={8}
-                      percentageTop={0}
-                      fontSize={18}
-                    />
-                    <span className="font-bold text-white lg:w-12 md:text-wrap text-nowrap md:text-base text-xs lg:ml-20 lg:mr-0 hidden lg:inline-block">
-                      User Score
-                    </span>
-                    <span className="size-9 cursor-pointer lg:inline-block text-2xl scale-110 hover:scale-125 text-center relative group hidden">
-                      😍
-                      <span className="absolute bg-slate-700 border border-gray-50 px-2 rounded-lg top-6 left-8 text-white text-[10px] text-nowrap hidden group-hover:inline-block">
-                        Smilling face with heart eyes
-                      </span>
-                    </span>
-                    <button className="flex items-center md:gap-2 gap-1 text-xs md:text-base shadow hover:scale-x-105 md:bg-dark_blue p-2 text-white font-semibold rounded-2xl lg:ml-0 md:ml-20">
-                      What's your
-                      <span className="border-b-2 border-sky-500">Vibe?</span>
-                      <div className="relative group md:inline-block hidden">
-                        <img src={info} alt="info" className="size-4" />
-                        <span className="absolute -top-8 left-8 bg-dark_blue text-white rounded-lg shadow p-2 w-72 text-left scale-105 hidden  group-hover:inline-block">
-                          Welcome to Vibes, TMDB's new rating system! For more
-                          information, visit the contribution bible.
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-
-                  <div className="md:flex hidden items-center gap-5">
-                    <div className="size-12 bg-dark_blue rounded-full flex flex-col items-center justify-center cursor-pointer">
-                      <img className="size-4" src={addIcon} alt="add to list" />
-                    </div>
-                    <div className="size-12 bg-dark_blue rounded-full flex flex-col items-center justify-center cursor-pointer">
-                      <img
-                        className="size-4"
-                        src={heartIcon}
-                        alt="mark as favorite"
-                      />
-                    </div>
-                    <div className="size-12 bg-dark_blue rounded-full flex flex-col items-center justify-center cursor-pointer">
-                      <img
-                        className="size-4"
-                        src={saveIcon}
-                        alt="add to your watchlist"
-                      />
-                    </div>
-                    <div
-                      className="flex items-center gap-2 hover:text-slate-200 text-white font-bold cursor-pointer"
-                      onClick={() => setTrailerPopupVisibility(true)}
-                    >
-                      <img className="size-4" src={playIcon} alt="" />
-                      <span>Play Trailer</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-8">
-                    <span className="font-medium text-slate-100 italic">
-                      {movie?.tagline}
-                    </span>
-                    <div>
-                      <h5 className="font-bold md:text-lg text-white">
-                        Overview
-                      </h5>
-                      <p className="font-medium text-xs md:text-base text-slate-100">
-                        {movie?.overview}
-                      </p>
-                    </div>
-                    <div className="mt-4">
-                      <Link
-                        className="text-white font-bold hover:text-slate-200"
-                        to=""
-                      >
-                        Jac Schaeffer
-                      </Link>
-                      <span className="text-slate-50 text-xs block">
-                        Creator
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div className="mt-4 flex justify-center">

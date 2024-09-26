@@ -9,6 +9,7 @@ import PopupWrapper from "@/shared/reusable/PopupWrapper";
 import { getImageUrl } from "@/shared/utils/getImageUrl";
 import closeIcon from "@/assets/imgs/close.svg";
 import { useState } from "react";
+import img from "@/assets/imgs/img.svg";
 
 interface IDetailBanner {
   title: string;
@@ -50,9 +51,9 @@ const DetailBanner = ({
           <div className="flex flex-wrap -mx-4">
             <div className="w-full md:w-[300px] px-4 md:h-[450px] mb-8">
               <img
-                src={getImageUrl(movieImage)}
+                src={movieImage ? getImageUrl(movieImage) : img}
                 alt={title}
-                className="w-full h-full rounded-lg shadow-md mb-4 object-cover"
+                className="w-full h-full rounded-lg shadow-md mb-4 object-cover bg-gray-500"
               />
             </div>
 

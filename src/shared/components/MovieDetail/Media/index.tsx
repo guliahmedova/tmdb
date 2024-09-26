@@ -14,7 +14,7 @@ const Media = ({
 }) => {
   const [activeSocialTab, setActiveSocialTab] = useState<
     "popular" | "videos" | "backdrops" | "posters"
-  >("popular");
+  >("backdrops");
 
   const renderTabContent = (
     tabKey: "popular" | "videos" | "backdrops" | "posters"
@@ -35,9 +35,7 @@ const Media = ({
             </div>
           ))
         ) : (
-          <p className="text-gray-400">
-            No backdrops available for this movie.
-          </p>
+          <p className="text-gray-400">No logos available for this movie.</p>
         );
       case "videos":
         return movieVideos?.length > 0 ? (
