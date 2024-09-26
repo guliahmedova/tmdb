@@ -1,55 +1,68 @@
-import arrow from "@/assets/imgs/arrow-next.svg";
+import arrowNext from "@/assets/imgs/arrow-next.svg";
 import closeIcon from "@/assets/imgs/close.svg";
-import like from "@/assets/imgs/like.svg";
-import m from "@/assets/imgs/m1.jpg";
-import { SetStateAction } from "react";
+import { IMovieImageResponse } from "@/shared/models/movie";
+import { getImageUrl } from "@/shared/utils/getImageUrl";
+import { SetStateAction, useState } from "react";
+import img from "@/assets/imgs/img.svg";
 
 interface IExpandModal {
   setState: React.Dispatch<SetStateAction<boolean>>;
+  movieImages: IMovieImageResponse;
 }
 
-const ExpandModal = ({ setState }: IExpandModal) => {
-  return (
-    <div className="bg-white shadow-lg rounded-lg w-9/12 h-[80vh]">
-      <div className="grid grid-cols-2 h-full">
-        <div className="size-full bg-red-800 relative">
-          <img
-            src={m}
-            alt=""
-            className="rounded-tl-lg rounded-bl-lg absolute size-full object-cover"
-          />
-        </div>
+const ExpandModal = ({ setState, movieImages }: IExpandModal) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-        <div className="w-full p-4">
-          <div className="text-right">
-            <button
-              className="cursor-pointer mr-0"
-              onClick={() => setState(false)}
-            >
-              <img src={closeIcon} alt="close popup" className="size-8" />
-            </button>
-          </div>
-          <div className="flex justify-between items-center mt-4">
-            <button>
-              <img src={like} className="size-5 rotate-180" alt="dislike" />
-            </button>
-            <button>
-              <img src={like} className="size-5" alt="like" />
-            </button>
-          </div>
-          <div className="flex justify-between items-center mt-4">
-            <button>
-              <img
-                src={arrow}
-                className="size-8 -scale-x-100"
-                alt="previous image"
-              />
-            </button>
-            <button>
-              <img src={arrow} className="size-8" alt="next image" />
-            </button>
-          </div>
-        </div>
+  const images =
+    movieImages?.posters?.length > 0
+      ? movieImages?.posters
+      : movieImages?.backdrops;
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images?.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images?.length - 1 : prevIndex - 1
+    );
+  };
+
+  return (
+    <div className="bg-black bg-opacity-75 fixed inset-0 flex justify-center items-center z-50">
+      <div className="relative bg-white shadow-lg rounded-lg lg:w-9/12 w-full h-[80vh] flex items-center justify-center">
+        <img
+          src={
+            images?.length ? getImageUrl(images?.[currentIndex].file_path) : img
+          }
+          alt="Expanded Movie"
+          className="max-h-full max-w-full object-contain"
+        />
+
+        <button
+          className="absolute top-4 right-4 bg-gray-800 text-white rounded-full p-2"
+          onClick={() => setState(false)}
+        >
+          <img src={closeIcon} alt="Close Modal" className="size-4 invert" />
+        </button>
+
+        <button
+          className="absolute left-4 bg-gray-800 text-white rounded-full p-2"
+          onClick={handlePrev}
+        >
+          <img
+            src={arrowNext}
+            alt="Previous"
+            className="size-8 invert rotate-180"
+          />
+        </button>
+
+        <button
+          className="absolute right-4 bg-gray-800 text-white rounded-full p-2"
+          onClick={handleNext}
+        >
+          <img src={arrowNext} alt="Next" className="size-8 invert" />
+        </button>
       </div>
     </div>
   );

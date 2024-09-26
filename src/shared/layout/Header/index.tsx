@@ -76,7 +76,7 @@ const Header = () => {
             </button>
 
             <Link to="/" className="2xl:hidden inline-block mx-auto">
-              <img src={logoMobile} alt="logo" className="size-14 bg-red-500" />
+              <img src={logoMobile} alt="logo" className="size-14" />
             </Link>
 
             <div className="flex items-center 2xl:gap-8 gap-0 5xl:gap-24">

@@ -14,7 +14,6 @@ import {
 } from "@/redux/features/movieSlice";
 import CastCard from "@/shared/components/MovieDetail/Casts/CastCard";
 import DetailBanner from "@/shared/components/MovieDetail/DetailBanner";
-import ExpandModal from "@/shared/components/MovieDetail/ExpandModal";
 import Media from "@/shared/components/MovieDetail/Media";
 import RecommendationCard from "@/shared/components/MovieDetail/RecommendationCard";
 import ReviewsCard from "@/shared/components/MovieDetail/ReviewsCard";
@@ -28,7 +27,6 @@ const MovieDetail = () => {
   const [activeSocialTab, setActiveSocialTab] = useState<
     "review" | "discussion"
   >("review");
-  const [isImageExpand, setImageExpend] = useState(false);
   const [isTrailerPopupVisible, setTrailerPopupVisibility] = useState(false);
   const { id } = useParams();
 
@@ -60,7 +58,7 @@ const MovieDetail = () => {
     <>
       <div className="flex justify-center bg-white">
         <div className="w-full">
-          <div>
+          <div className="">
             <div className="flex justify-center pt-4 border">
               <ul className="flex lg:gap-10 gap-5">
                 <li className="flex xl:text-base text-sm items-baseline gap-1 xl:pb-4 pb-3 text-slate-600 border-b-4 border-sky-500">
@@ -114,13 +112,13 @@ const MovieDetail = () => {
                   )}
 
                   <div className="border-b pb-4">
-                    <div className="flex items-center gap-5 pl-10">
-                      <h3 className="font-semibold text-2xl text-dark_blue pb-3">
+                    <div className="flex items-center flex-wrap gap-5 lg:pl-10 px-5">
+                      <h3 className="font-semibold lg:text-2xl text-dark_blue pb-3">
                         Social
                       </h3>
                       <div className="flex items-center gap-4 font-semibold">
                         <span
-                          className={`pb-2 ${
+                          className={`pb-2 lg:text-base text-sm ${
                             activeSocialTab === "review"
                               ? "border-b-2 border-black"
                               : "border-b-2 border-transparent "
@@ -130,7 +128,7 @@ const MovieDetail = () => {
                           Reviews {movieReviews?.length}
                         </span>
                         <span
-                          className={`pb-2 ${
+                          className={`pb-2 lg:text-base text-sm ${
                             activeSocialTab === "discussion"
                               ? "border-b-2 border-black"
                               : "border-b-2 border-transparent "
@@ -149,13 +147,13 @@ const MovieDetail = () => {
                             <ReviewsCard key={review.id} review={review} />
                           ))
                         ) : (
-                          <p className="text-slate-500 pl-10">
+                          <p className="text-slate-500 lg:pl-10 lg:text-base text-sm">
                             We don't have any reviews for {movie.title}. Would
                             you like to write one?
                           </p>
                         )
                       ) : (
-                        <p className="text-slate-500 pl-10">
+                        <p className="text-slate-500 lg:pl-10 lg:text-base text-sm">
                           We don't have any discussions for {movie.title}. Would
                           you like to write one?
                         </p>
@@ -260,11 +258,6 @@ const MovieDetail = () => {
           </div>
         </div>
       </div>
-
-      <PopupWrapper
-        isOpen={isImageExpand}
-        children={<ExpandModal setState={setImageExpend} />}
-      />
 
       <PopupWrapper
         isOpen={isTrailerPopupVisible}

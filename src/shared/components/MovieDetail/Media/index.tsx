@@ -98,11 +98,11 @@ const Media = ({
 
   return (
     <div className="md:border-b mt-10">
-      <div className="flex items-center gap-5 pl-10">
-        <h3 className="font-semibold text-2xl text-dark_blue pb-3">Media</h3>
+      <div className="flex items-center gap-5 lg:pl-10 px-5 flex-wrap">
+        <h3 className="font-semibold lg:text-2xl text-dark_blue pb-3">Media</h3>
         <div className="flex items-center gap-4 font-semibold">
           <span
-            className={`pb-2 ${
+            className={`pb-2 lg:text-base text-sm ${
               activeSocialTab === "backdrops"
                 ? "border-b-2 border-black"
                 : "border-b-2 border-transparent "
@@ -112,7 +112,7 @@ const Media = ({
             Backdrops {movieImages?.backdrops?.length}
           </span>
           <span
-            className={`pb-2 ${
+            className={`pb-2 lg:text-base text-sm ${
               activeSocialTab === "videos"
                 ? "border-b-2 border-black"
                 : "border-b-2 border-transparent "
@@ -122,7 +122,7 @@ const Media = ({
             Videos {movieVideos?.length}
           </span>
           <span
-            className={`pb-2 ${
+            className={`pb-2 lg:text-base text-sm ${
               activeSocialTab === "posters"
                 ? "border-b-2 border-black"
                 : "border-b-2 border-transparent "
@@ -132,7 +132,7 @@ const Media = ({
             Posters 104
           </span>
           <span
-            className={`pb-2 ${
+            className={`pb-2 lg:text-base text-sm ${
               activeSocialTab === "popular"
                 ? "border-b-2 border-black"
                 : "border-b-2 border-transparent "
