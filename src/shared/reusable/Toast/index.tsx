@@ -1,42 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ToastContext } from "./ToastContext";
 
-const Toast = ({
-  message,
-  onClose,
-}: {
+type ToastProps = {
   message: string;
-  onClose: () => void;
-}) => {
+  close: () => void;
+};
+
+function useTimeout(callbackFunction: () => void) {
+  const savedCallback = useRef(callbackFunction);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
+    savedCallback.current = callbackFunction;
+  }, [callbackFunction]);
+  useEffect(() => {
+    const functionId = setTimeout(() => {
+      savedCallback.current();
     }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [onClose]);
+    return () => clearTimeout(functionId);
+  }, []);
+}
+
+const Toast = ({ message, close }: ToastProps) => {
+  useTimeout(() => {
+    close();
+  });
 
   return (
     <div
-      id="toast-success"
-      className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-green-50 rounded-lg shadow-lg border"
+      className="toast-animation | flex bg-white items-center max-w-xs p-2 mb-4 text-gray-500 rounded-lg shadow w-80 border"
       role="alert"
     >
-      <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-        <svg
-          className="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-        </svg>
-        <span className="sr-only">Check icon</span>
-      </div>
-      <div className="ms-3 text-sm font-normal">{message}</div>
+      <div className="ms-3 text-lg font-normal">{message}</div>
       <button
         type="button"
-        className="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8"
+        onClick={close}
+        className="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8"
         data-dismiss-target="#toast-success"
         aria-label="Close"
       >
@@ -62,3 +60,57 @@ const Toast = ({
 };
 
 export default Toast;
+
+type ToastProviderProps = {
+  children: React.ReactElement;
+};
+
+type ToastType = {
+  id: number;
+  message: string;
+};
+
+export function ToastProvider({ children }: ToastProviderProps) {
+  const [toasts, setToasts] = useState<ToastType[]>([]);
+
+  const openToast = (message: string) => {
+    const newToast = {
+      id: Date.now(),
+      message: message,
+    };
+
+    setToasts((prevToasts) => [...prevToasts, newToast]);
+  };
+
+  const closeToast = (id: number) => {
+    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+  };
+
+  const contextValue = useMemo(
+    () => ({
+      open: openToast,
+      close: closeToast,
+    }),
+    []
+  );
+
+  return (
+    <>
+      <ToastContext.Provider value={contextValue}>
+        {children}
+        <div className="fixed top-2 right-2 flex gap-2 z-[53]">
+          {toasts &&
+            toasts?.map((toast) => {
+              return (
+                <Toast
+                  key={toast.id}
+                  close={() => closeToast(toast.id)}
+                  message={toast.message}
+                />
+              );
+            })}
+        </div>
+      </ToastContext.Provider>
+    </>
+  );
+}

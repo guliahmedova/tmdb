@@ -9,6 +9,7 @@ import moment from "moment";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CircularBar from "../../CircularBar";
+import { useToast } from "../../Toast/ToastContext";
 
 const CarouselCard = ({
   movie,
@@ -20,6 +21,7 @@ const CarouselCard = ({
   const [isMoreOptionsVisible, setMoreOptionsVisibility] = useState(false);
   const [isAddedFavorite, setIsAddedFavorite] = useState(false);
   const dispatch = useAppDispatch();
+  const toast = useToast();
 
   const handleFavoriteClick = () => {
     const newFavoriteState = !isAddedFavorite;
@@ -35,9 +37,9 @@ const CarouselCard = ({
       );
 
       if (newFavoriteState) {
-        alert("Added Successfully!");
+        toast?.open("Added Successfully!");
       } else {
-        alert("Removed Successfully!");
+        toast?.open("Removed Successfully!");
       }
     }
   };
