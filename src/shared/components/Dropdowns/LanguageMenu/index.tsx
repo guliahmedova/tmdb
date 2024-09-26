@@ -5,6 +5,7 @@ import { getLanguages } from "@/redux/features/filterOptSlice";
 import { setLangToStorage } from "@/redux/features/translationSlice";
 import OutsideWrapper from "@/shared/components/OutsideWrapper";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 const LanguageDropdown = () => {
@@ -16,6 +17,7 @@ const LanguageDropdown = () => {
     (state: RootState) => state.filterOpt.languages
   );
   const dispatch = useAppDispatch();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     dispatch(getLanguages());
@@ -23,6 +25,7 @@ const LanguageDropdown = () => {
 
   const changeLanguage = (lng: string) => {
     dispatch(setLangToStorage(lng));
+    i18n.changeLanguage(lng);
   };
 
   return (

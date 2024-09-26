@@ -9,11 +9,11 @@ const translationSlice = createSlice({
   reducers: {
     setLangToStorage: (state, action) => {
       state.lang = action.payload;
-      localStorage.setItem("lang", state.lang);
+      sessionStorage.setItem("lang", state.lang);
       state.isLangChanged = true;
     },
     getLangFromStorage: (state) => {
-      const storedLang = localStorage.getItem("lang");
+      const storedLang = sessionStorage.getItem("lang");
       state.isLangChanged = false;
       if (storedLang) {
         state.lang = storedLang;
